@@ -1,0 +1,28 @@
+{
+  "name": "ssdproject",
+  "version": "1.0.0",
+  "description": "Project Files for Server-side Development Course",
+  "main": "app.js",
+  "scripts": {
+    "start": "node -r esm app.js",
+    "test": "mocha -r esm test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ykbell09/SSDProject.git"
+  },
+  "author": "Yvette Bell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ykbell09/SSDProject/issues"
+  },
+  "homepage": "https://github.com/ykbell09/SSDProject#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "knex": "^0.20.9",
+    "mocha": "^7.0.1",
+    "pg": "^7.18.1"
+  }
+}
