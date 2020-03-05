@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great|Roboto|Sacramento&display=swap');
+
+/*
+font-family: 'Fredericka the Great', cursive;
+font-family: 'Roboto', sans-serif;
+font-family: 'Sacramento', cursive;
+*/
+
+:root {
+  --white: #f4f4e8;
+  --ltWhite: #fbfbf1;
+  --lightBlue: #b7ccdd;
+  --lightMedBlue: #8ca3b5;
+  --darkMedBlue: #3b759d;
+  --black: #03060f;
+  --darkRed: #510b03;
+  --darkOrange: #c05100;
+  --orange: #fba23c;
+  --yellow: #ffed77;
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+  color: var(--black);
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: var(--lightBlue);
+}
+
+/* styling for body containers */
+h1 {
+  font-family: 'Sacramento', cursive;
+  font-size: 6em;
+}
+
+h2 {
+  font-family: 'Sacramento', cursive;
+  font-size: 3em;
+  margin-top: 0;
+}
+
+h3, h4 {
+  font-family: 'Fredericka the Great', cursive;
+}
+
+/* Grid Formatting */
+.item-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 20px;
+  padding: 0 50px;
+}
+
+.item {
+  padding: 25px;
+  background-color: var(--darkMedBlue);
+  border: 3px solid var(--lightMedBlue);
+  border-radius: 3px;
+}
+
+.subscribe,
+.update-website {
+  grid-column: 1 / span 1;
+}
+
+.search {
+  display: block;
+}
+
+.results {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 3;
+}
+
+
+button,
+.submit {
+  border: 0;
+  padding: 8px 20px;
+  margin: 0 2px;
+  border-radius: 3px;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: var(--white);
+  color: var(--darkMedBlue);
+  font-weight: 100;
+  text-align: center;
+  margin-top: 20px;
+  display: block;
+}
+
+button:active {
+  outline: none;
+}
