@@ -18,14 +18,14 @@ type Member {
   first_name: String
   email_address: String!
 }
-type MemberInput {
+type Query {
+  spiritsByDistiller(distiller_id: ID!): Distiller
+}
+input MemberData {
   first_name: String
   email_address: String!
 }
-type query {
-  getSpirits(distiller_id: ID!): [Spirit]
-}
-type mutation {
-  addMember(member: MemberInput!): Member!
+type Mutation {
+  newMember(member: MemberData): Member
 }
 `);
