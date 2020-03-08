@@ -1,9 +1,10 @@
 {
-  "name": "ssd_wk6",
+  "name": "week6assignment",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon -r esm current/app.js",
+    "start": "nodemon -r esm app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,10 +21,6 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
-    "graphql": "^14.6.0",
-    "knex": "^0.20.11",
-    "nodemon": "^2.0.2",
-    "pg": "^7.18.2"
-  },
-  "description": ""
+    "graphql": "^14.6.0"
+  }
 }

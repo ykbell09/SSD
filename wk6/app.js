@@ -19,4 +19,4 @@ app.use('/static', staticRoute);
 app.use('/', staticRoute);
 
 const PORT = 8000;
-app.listen(PORT, () => console.log(`listening on port ${PORT} .. YOU CAN DO THIS`));
+app.listen(PORT, () => console.log(`listening on port ${PORT}`));
