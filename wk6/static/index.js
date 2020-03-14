@@ -1,12 +1,28 @@
+import { response } from "express";
+
 // Client side JS -- search buttons, forms, etc.
 
 // NEED TO CONVERT RESULTING ARRAY OF OBJECTS TO LIST ITEMS
 // select Amass from dropdown to get spirits from api
-document.querySelector('#search-box').addEventListener('click', () => fetch('/api/graphql')
-    .then(response => response.text())
+document.querySelector('#search-box').addEventListener('click', () => {
+    const query = `query {
+        spiritsByDistiller(distiller_id: id) {
+            distiller_id
+            distiller_name
+            spirits {
+                spirit_name
+            }
+        }
+    }`;
+    fetch('/api/graphql', {
+        method: 'post',
+        body: JSON.stringify({ query, variables: {distiller_id: 1003} }),
+    })
+    .then(response => response.json())
     .then(data => {
-        document.querySelector('.results-list').innerHTML = data;
-    }));
+        document.querySelector('.results-list').innerHTML = data.spiritsByDistiller.distiller_name;
+    });
+});
 
 
 // submit new user data and alert the new user id

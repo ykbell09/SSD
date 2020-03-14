@@ -70,12 +70,13 @@ h3, h4 {
 }
 
 .search {
-  display: block;
+  grid-column: 1 / span 2;
+  grid-row-start: 1;
 }
 
 .results {
   grid-column: 2 / span 1;
-  grid-row: 1 / span 2;
+  grid-row: 2 / span 2;
 }
 
 
@@ -97,9 +98,21 @@ button,
   display: block;
 }
 
+.search {
+  text-align: center;
+}
+.search h3,
+#searchForm {
+  display: inline;
+}
+
+.search h3 {
+  padding-right: 20px;
+}
+
 select,
 input.field {
-  width: 100%;
+  width: 50%;
   padding: 8px 10px;
   border: thin solid var(--ltWhite);
   border-radius: 3px;

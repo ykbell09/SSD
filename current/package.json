@@ -1,7 +1,7 @@
 {
-  "name": "week6assignment",
+  "name": "ssd_proj",
   "version": "1.0.0",
-  "description": "",
+  "description": "last two weeks assignments",
   "main": "app.js",
   "scripts": {
     "start": "nodemon -r esm app.js",
@@ -18,9 +18,14 @@
   },
   "homepage": "https://github.com/ykbell09/SSD#readme",
   "dependencies": {
+    "bcrypt": "^4.0.1",
+    "connect-session-knex": "^1.6.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
-    "graphql": "^14.6.0"
+    "express-session": "^1.17.0",
+    "graphql": "^14.6.0",
+    "knex": "^0.20.11",
+    "pg": "^7.18.2"
   }
 }

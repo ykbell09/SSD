@@ -1,9 +1,21 @@
 import express from 'express';
+import session from 'express-session';
+import ConnectSessionKnex from 'connect-session-knex';
+import knex from './database/database';
 import graphqlHTTP from 'express-graphql';
-import schema from './database/graphql/schema';
-import resolvers from './database/graphql/resolvers';
+import schema from './services/graphql/schema';
+import resolvers from '../currentX/services/graphql/resolvers';
 
 const app = express();
+
+// sessions middleware
+const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
+const KnexSessionStore = ConnectSessionKnex(session);
+app.use(session({
+    store: new KnexSessionStore({ knex }),
+    secret: 'Tom Collins',
+    cookie: { maxAge: ONE_WEEK }
+}));
 
 // graphql endpoint
 const env = process.env.NODE_ENV || 'development';
