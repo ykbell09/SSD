@@ -8,8 +8,8 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
     const selected_id = document.querySelector('#searchSelect').selectedOptions[0].value;
     console.log(selected_id);
 
-    const query = `query {
-        spiritsByDistiller(distiller_id: ID){
+    const query = `query Spirits($distillerId: ID) {
+        spiritsByDistiller(distiller_id: $distillerId) {
             spirit_name
         }
     }`;
@@ -21,12 +21,12 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
             'Accept': 'application/json',
         },
         body: JSON.stringify({
-            query, variables: { distiller_id: selected_id }
+            query, variables: { distillerId: selected_id }
         })
-
-            .then(response = response.json())
-            .then(data => document.querySelector('.result-list').innerHTML = data.spiritsByDistiller.Spirit.spirit_name)
     })
+        .then(response => response.json())
+        .then(data => document.querySelector('.result-list').innerHTML = data.spiritsByDistiller.spirit_name)
+
 });
 
 
@@ -40,10 +40,10 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
 
 
 // SIGN IN button -- currently logs values
-    document.querySelector('#addForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const addEmail = document.querySelector('#addEmail').value;
-        const addPassword = document.querySelector('#addPassword').value;
-        const userObject = { email_address: addEmail, password: addPassword };
-        console.log(userObject);
-    });
+document.querySelector('#addForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const addEmail = document.querySelector('#addEmail').value;
+    const addPassword = document.querySelector('#addPassword').value;
+    const userObject = { email_address: addEmail, password: addPassword };
+    console.log(userObject);
+});

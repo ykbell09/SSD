@@ -20,7 +20,7 @@ const schema = buildSchema(`
      joined: Date!
  }
  type Query {
-     spiritsByDistiller(distiller_id: ID): Spirit
+     spiritsByDistiller(distiller_id: ID): [Spirit]
      currentMember: Member
  }
  input MemberInput {

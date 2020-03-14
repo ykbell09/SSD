@@ -3,7 +3,9 @@ import { compareHash } from '../auth';
 
 const resolvers = {
     spiritsByDistiller: async ({ distiller_id }) => {
-        await getSpiritsByDistiller(distiller_id);
+        console.log('resolver', distiller_id);
+        return await getSpiritsByDistiller(distiller_id);
+        
     },
     login: async({ loginInput: { email_address, password } },
         { session }) => {
