@@ -10,7 +10,7 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
 
     const query = `query Spirits($distillerId: ID) {
         spiritsByDistiller(distiller_id: $distillerId) {
-            spirit_name
+            name
         }
     }`;
 
@@ -25,8 +25,7 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
         })
     })
         .then(response => response.json())
-        .then(data => document.querySelector('.result-list').innerHTML = data.spiritsByDistiller.spirit_name)
-
+        .then(data => document.querySelector('.result-list').innerHTML = data.data.spiritsByDistiller.map(spirit => `${name}`))
 });
 
 
