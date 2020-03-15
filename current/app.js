@@ -4,7 +4,7 @@ import ConnectSessionKnex from 'connect-session-knex';
 import knex from './database/database';
 import graphqlHTTP from 'express-graphql';
 import schema from './services/graphql/schema';
-import resolvers from '../currentX/services/graphql/resolvers';
+import resolvers from './services/graphql/schema';
 
 const app = express();
 

@@ -1,16 +1,13 @@
-// import response from 'express';
-// KEEP GETTING ERROR (localhost/:1 Uncaught TypeError: Failed to resolve module specifier "express". Relative references must start with either "/", "./", or "../".)
-// if I remove this statement, then I get "response is not defined" error (line 27)
-
 // graphql api to display spirits by distiller using option selected by client
 document.querySelector('#searchSelect').addEventListener('change', () => {
     // GETS THE DISTILLER ID SELCTED BY CLIENT - selected_id
     const selected_id = document.querySelector('#searchSelect').selectedOptions[0].value;
     console.log(selected_id);
 
-    const query = `query Spirits($distillerId: ID) {
+    const query =     
+    `query Spirits($distillerId: ID) {
         spiritsByDistiller(distiller_id: $distillerId) {
-            name
+            spirit_name
         }
     }`;
 
@@ -24,8 +21,8 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
             query, variables: { distillerId: selected_id }
         })
     })
-        .then(response => response.json())
-        .then(data => document.querySelector('.result-list').innerHTML = data.data.spiritsByDistiller.map(spirit => `${name}`))
+        .then(console.log(response => response.json()))
+        // .then(data => document.querySelector('.result-list').innerHTML = data.data.spiritsByDistiller.map(spirit => `${name}`))
 });
 
 

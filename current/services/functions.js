@@ -1,15 +1,6 @@
 import knex from '../database/database';
 import { hashPass } from './auth';
 
-// TEST FUNCTIONS
-export const getAllSpirits = async () => {
-    return await knex('spirits')
-        .select('name', 'distiller_id')
-    .returning('name','distiller_id')
-};
-
-
-
 // READ query -- get spirits by distiller
 export const getSpiritsByDistiller = async selected_id => {
     return await knex('spirits')
