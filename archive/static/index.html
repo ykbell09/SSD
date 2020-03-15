@@ -15,36 +15,30 @@
             all the gins
         </h1>
     </div>
-    <div class="item-container">
 
-        <div class="login item">
-            <!-- log in to user account  -->
-            <h3>sign in to your account</h3>
-            <form id="loginForm">
-                <p>
-                    <label>email <input class="field" id="loginEmail" name="loginEmail"
-                            placeholder="email address" /></label>
-                </p>
-                <p>
-                    <label>password <input class="field" id="password" name="password" placeholder="password" /></label>
-                </p>
-                <input class="submit" type="submit" value="log in" />
-            </form>
+    <div class="item-container">     
+        <div class="search item">
+            <!-- seach by distiller -->
+            <label for="search-box"><h3>search by distiller</h3></label>
+            
+            <select id="search-box">
+                <option value="select">please select</option>
+                <option value="1002">Amass</option>
+                <option value="1003">Golden State Distillery</option>
+                <option value="1001">The Spirit Guild</option>
+            </select>
         </div>
-
         <div class="subscribe item">
             <!-- add to users list  -->
-            <h3>join the club</h3>
+            <h3>subscribe to our mailing list</h3>
             <form id="addForm">
                 <p>
-                    <label>email <input class="field" id="addEmail" name="addEmail"
-                            placeholder="email address" /></label>
+                    <label>name <input class="field" id="addName" name="addName" placeholder="first name" /></label>
                 </p>
                 <p>
-                    <label>password <input class="field" id="addPassword" name="addPassword"
-                            placeholder="password" /></label>
+                    <label>email <input class="field" id="addEmail" name="addEmail" placeholder="email" /></label>
                 </p>
-                <input class="submit" type="submit" value="sign up" />
+                <input class="submit" type="submit" value="subscribe" />
             </form>
 
             <!-- remove from users list
@@ -57,25 +51,11 @@
             </form> -->
 
         </div>
-        <div class="search item">
-            <!-- seach by distiller -->
-            <label for="search-box">
-                <h3>search by distiller</h3>
-            </label>
-            <form id="searchForm">
-                <select id="searchSelect">
-                    <option selected>please select</option>
-                    <option value="1002">Amass</option>
-                    <option value="1003">Golden State Distillery</option>
-                    <option value="1001">The Spirit Guild</option>
-                </select>
-            </form>
-        </div>
+
         <div class="results item article">
             <!-- display results of search -->
             <h2>check out these great spirits ...</h2>
-            <p class="results-list">
-            </p>
+            <p class="results-list"></p>
         </div>
 
         <!-- <div class="update-website item article">

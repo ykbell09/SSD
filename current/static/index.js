@@ -3,8 +3,9 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
     // GETS THE DISTILLER ID SELCTED BY CLIENT - selected_id
     const selected_id = document.querySelector('#searchSelect').selectedOptions[0].value;
 
-    const query =     
-    `query Spirits($distillerId: ID) {
+    // GRAPH QL QUERY TO GET LIST OF SPIRITS
+    const query =
+        `query Spirits($distillerId: ID) {
         spiritsByDistiller(distiller_id: $distillerId) {
             spirit_name
         }
@@ -21,10 +22,30 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
         })
     })
         .then(response => response.json())
-        .then(data => document.querySelector('.results-list').innerHTML = data.data.spiritsByDistiller.map(spirit => `${spirit.spirit_name}`))
+        .then(data => {
+            // CLEARS LIST FROM ANY PREVIOUS SEARCH
+            if (document.querySelector('.resultList') !== null ) {
+                document.querySelector('.resultList').remove()
+            };       
+    
+            data = data.data.spiritsByDistiller.map(spirit => `${spirit.spirit_name}`)
+            
+            // CREATES AN HTML ELEMENT TO INSERT A LIST & INSERTS QUERY RESULTS AS LIST ITEMS
+            const resultsP = document.querySelector('.results-list');
+            const list = document.createElement('ul');
+            list.className = 'resultList';
+            
+            const makeListItems = (item) => {
+
+                const listItem = document.createElement('li');
+                listItem.className = 'listItem';
+                listItem.innerText = item;
+                resultsP.appendChild(list);
+                list.appendChild(listItem);
+            };
+            data.forEach(makeListItems);
+        })
 });
-
-
 // LOG IN button -- currently logs values
 document.querySelector('#loginForm').addEventListener('submit', (e) => {
     e.preventDefault();

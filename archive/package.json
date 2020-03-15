@@ -1,12 +1,10 @@
 {
-  "name": "ssd_proj",
+  "name": "ssd_wk6",
   "version": "1.0.0",
-  "description": "last two weeks assignments",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "make-db": "dropdb --username=postgres --if-exists current && createdb --username=postgres current && psql -U postgres -d current -f sql/schema.sql && psql -U postgres -d current -f sql/schema.sql",
-    "migrate": "knex migrate:latest",
-    "start": "nodemon -r esm app.js"
+    "start": "nodemon -r esm app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -19,14 +17,13 @@
   },
   "homepage": "https://github.com/ykbell09/SSD#readme",
   "dependencies": {
-    "bcrypt": "^4.0.1",
-    "connect-session-knex": "^1.6.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
-    "express-session": "^1.17.0",
     "graphql": "^14.6.0",
     "knex": "^0.20.11",
+    "nodemon": "^2.0.2",
     "pg": "^7.18.2"
-  }
+  },
+  "description": ""
 }
