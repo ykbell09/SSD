@@ -4,9 +4,9 @@ import { hashPass } from './auth';
 // READ query -- get spirits by distiller
 export const getSpiritsByDistiller = async selected_id => {
     return await knex('spirits')
-        .select('id', 'spirit-name', 'distiller_id')
+        .select('id', 'spirit_name', 'distiller_id')
         .where({ distiller_id: selected_id })
-        .returning('id', 'spirit-name', 'distiller_id')
+        .returning('id', 'spirit_name', 'distiller_id')
 };
 
 export const getMemberByEmail = async email_address =>

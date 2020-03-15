@@ -2,7 +2,6 @@
 document.querySelector('#searchSelect').addEventListener('change', () => {
     // GETS THE DISTILLER ID SELCTED BY CLIENT - selected_id
     const selected_id = document.querySelector('#searchSelect').selectedOptions[0].value;
-    console.log(selected_id);
 
     const query =     
     `query Spirits($distillerId: ID) {
@@ -21,8 +20,8 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
             query, variables: { distillerId: selected_id }
         })
     })
-        .then(console.log(response => response.json()))
-        // .then(data => document.querySelector('.result-list').innerHTML = data.data.spiritsByDistiller.map(spirit => `${name}`))
+        .then(response => response.json())
+        .then(data => document.querySelector('.results-list').innerHTML = data.data.spiritsByDistiller.map(spirit => `${spirit.spirit_name}`))
 });
 
 

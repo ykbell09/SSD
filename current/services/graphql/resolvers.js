@@ -1,10 +1,9 @@
-import { getSpiritsByDistiller, getMemberByEmail, createMember, getAllSpirits } from '../functions';
+import { getSpiritsByDistiller, getMemberByEmail, createMember, } from '../functions';
 import { compareHash } from '../auth';
 
 // ORIGINAL RESOLVERS
 const resolvers = {
     spiritsByDistiller: async ({ distiller_id }) => {
-        console.log('resolver', distiller_id);
         return await getSpiritsByDistiller(distiller_id);
         
     },
