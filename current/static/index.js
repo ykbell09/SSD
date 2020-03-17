@@ -27,7 +27,7 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
             if (document.querySelector('.resultList') !== null ) {
                 document.querySelector('.resultList').remove()
             };       
-    
+            
             data = data.data.spiritsByDistiller.map(spirit => `${spirit.spirit_name}`)
             
             // CREATES AN HTML ELEMENT TO INSERT A LIST & INSERTS QUERY RESULTS AS LIST ITEMS
@@ -46,20 +46,43 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
             data.forEach(makeListItems);
         })
 });
-// LOG IN button -- currently logs values
-document.querySelector('#loginForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const loginEmail = document.querySelector('#loginEmail').value;
-    const password = document.querySelector('#password').value;
-    console.log(loginEmail, password)
-});
 
-
-// SIGN IN button -- currently logs values
+// SIGN UP button 
 document.querySelector('#addForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const addEmail = document.querySelector('#addEmail').value;
     const addPassword = document.querySelector('#addPassword').value;
-    const userObject = { email_address: addEmail, password: addPassword };
-    console.log(userObject);
-});
+    // const memberObject = { email_address: addEmail, password: addPassword };
+    
+    const mutationQuery = `mutation newMemberSignUp($email_address: String!, $password: String!) {
+        signUp(member: {
+            email_address: $email_address,
+            password: $password,
+        }) {
+            id
+            }
+        }`;
+    
+    fetch('api/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            query: mutationQuery, variables: { email_address: addEmail, password: addPassword }
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert('You are now a member! Your new member ID is ' + data.data.signUp.id);
+            })
+    });
+
+// LOG IN button -- currently logs values
+    document.querySelector('#loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const loginEmail = document.querySelector('#loginEmail').value;
+        const password = document.querySelector('#password').value;
+        console.log(loginEmail, password)
+    });

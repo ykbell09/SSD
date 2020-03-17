@@ -32,8 +32,8 @@ import { buildSchema } from 'graphql';
      password: String!
  }
  type Mutation {
+     signUp(member: MemberInput!): Member
      login(loginInput: LoginInput!): Member
-     signup(member: MemberInput!): Member
  }
 
 `);

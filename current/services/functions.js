@@ -1,4 +1,4 @@
-import knex from '../database/database';
+import knex from '../database';
 import { hashPass } from './auth';
 
 // READ query -- get spirits by distiller
@@ -9,15 +9,23 @@ export const getSpiritsByDistiller = async selected_id => {
         .returning('id', 'spirit_name', 'distiller_id')
 };
 
-export const getMemberByEmail = async email_address =>
-    (await knex('members')
-        .select()
-        .where({ email_address })
-    )[0];
-
+// CREATE QUERY -- sign up for new members
 export const createMember = async ({ email_address, password }) => {
     const [member] = await knex('members')
         .insert({ email_address, password: await hashPass(password) })
         .returning(['id', 'email_address', 'password']);
     return member;
 };
+
+// READ QUERY - get member info by provided email address
+export const getMemberByEmail = async email => {
+    const [member] = await knex('members')
+        .select('id', 'email_address', 'password', 'joined')
+        .where({ email_address: email })
+        .returning('id', 'email_address', 'password', 'joined');
+    return member;
+};
+
+
+
+
