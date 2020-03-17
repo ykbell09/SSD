@@ -84,5 +84,29 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const loginEmail = document.querySelector('#loginEmail').value;
         const password = document.querySelector('#password').value;
-        console.log(loginEmail, password)
+        const mutationQuery = `mutation memberLogin($email_address: String!, $password: String!) {
+            login(member: {
+                email_address: $email_address,
+                password: $password,
+            }) {
+                id
+            }
+        }`;
+
+        fetch('api/graphql', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                query: mutationQuery, variables: { email_address: loginEmail, password: password }
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                // document.querySelector('.show').className = '.hide';
+
+                console.log(data.data.login.id);
+            })
     });

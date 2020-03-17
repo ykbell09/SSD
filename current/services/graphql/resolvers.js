@@ -7,20 +7,24 @@ const resolvers = {
         return await getSpiritsByDistiller(distiller_id);   
     },
     
-    signUp: async ({ member: { email_address, password } }) => {
-        await createMember({ email_address, password });
-        return await getMemberByEmail(email_address);
-        
-    }
+    signUp: async (
+            { member: { email_address, password } },
+            { session }
+    ) => {
+        session.member = await createMember({ email_address, password });
+        return session.member;        
+    },
+    login: async(
+        { member: { email_address, password } }, { session }
+    ) => {
+        const member = await getMemberByEmail(email_address);
+        const matches = compareHash(password, member.password);
+        session.member = matches ? member : null;
+        return session.member;
+    },
+    currentMember: (args, { session }) => session.member,
 
 }
-
-
-
-
-
-
-
 
 export default resolvers;
 
@@ -34,16 +38,3 @@ export default resolvers;
 //     session.user = matches ? user : null;
 //     return session.user;
 // },
-
-
-
-
-//    signup: async ({
-//         member: { email_address, password }
-//     }, { session }) => {
-//         session.member = await createMember({
-//             email_address, password
-//         });
-//         return session.member;
-//     },
-//         currentMember: (args, { session }) => session.member,

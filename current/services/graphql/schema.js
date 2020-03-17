@@ -16,12 +16,13 @@ import { buildSchema } from 'graphql';
  type Member {
      id: ID!
      email_address: String!
-     member_pw: String!
+     password: String!
      joined: Date!
  }
  type Query {
      spiritsByDistiller(distiller_id: ID): [Spirit]
      currentMember: Member
+     
  }
  input MemberInput {
      email_address: String!
@@ -33,7 +34,7 @@ import { buildSchema } from 'graphql';
  }
  type Mutation {
      signUp(member: MemberInput!): Member
-     login(loginInput: LoginInput!): Member
+     login(member: LoginInput!): Member
  }
 
 `);
