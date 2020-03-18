@@ -12,7 +12,7 @@ export const getSpiritsByDistiller = async selected_id => {
 // CREATE QUERY -- sign up for new members
 export const createMember = async ({ email_address, password }) => {
     const [member] = await knex('members')
-        .insert({ email_address, password: await hashPass(password) })
+        .insert({ email_address, password: await hashPass(password, 10) })
         .returning(['id', 'email_address', 'password']);
     return member;
 };

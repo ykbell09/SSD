@@ -4,5 +4,5 @@ const saltRounds = 10;
 export const hashPass = async rawPass =>
     await bcrypt.hash(rawPass, saltRounds);
 
-export const compareHash = async rawPass =>
-    await bcrypt.compare(rawPass, hashPass);
+export const compareHash = async (rawPass, password) =>
+    await bcrypt.compare(rawPass, password);
