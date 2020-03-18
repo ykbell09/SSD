@@ -105,8 +105,16 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
         })
             .then(response => response.json())
             .then(data => {
-                // document.querySelector('.show').className = '.hide';
+                const memberId = data.data.login.id;
 
-                console.log(data.data.login.id);
+                const loggedOutDiv = document.querySelector('.loggedOutDefault');
+                loggedOutDiv.className = 'hide';
+                const joinDiv = document.querySelector('.subscribe');
+                joinDiv.className = 'hide';
+                const loggedInDiv = document.querySelector('.loggedInDefault');
+                loggedInDiv.className = 'show';
+                const logInMessageH3 = document.createElement('h3');
+                logInMessageH3.innerHTML = 'Welcome, member ' + memberId + ' !';
+                loggedInDiv.appendChild(logInMessageH3);
             })
     });

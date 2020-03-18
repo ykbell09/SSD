@@ -124,10 +124,12 @@ button:active {
   outline: none;
 }
 
+.loggedOutDefault,
 .show {
   display: block;
 }
 
+.loggedInDefault,
 .hide {
   display: none;
 }

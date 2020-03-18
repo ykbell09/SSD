@@ -17,6 +17,18 @@ app.use(session({
     cookie: { maxAge: ONE_WEEK }
 }));
 
+// Error handler REFERENCE CODE FROM LESSON 25
+if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
+    app.use(function (err, req, res, next) {
+        console.error(err);
+        // then:
+        res.status(500).send();
+        // or:
+        res.send(errPageHTML);
+    });
+}
+
+
 // graphql endpoint
 const env = process.env.NODE_ENV || 'development';
 app.use('/api/graphql', graphqlHTTP({
