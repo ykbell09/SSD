@@ -22,7 +22,6 @@ import { buildSchema } from 'graphql';
  type Query {
      spiritsByDistiller(distiller_id: ID): [Spirit]
      currentMember: Member
-     
  }
  input MemberInput {
      email_address: String!

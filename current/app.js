@@ -13,7 +13,7 @@ const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
 const KnexSessionStore = ConnectSessionKnex(session);
 app.use(session({
     store: new KnexSessionStore({ knex }),
-    secret: 'Tom Collins',
+    secret: 'SecretPhrase',
     cookie: { maxAge: ONE_WEEK }
 }));
 
@@ -43,6 +43,6 @@ app.use('/', staticRoute);
 app.use('/static', staticRoute);
 
 // local port
-const PORT = 8000;
+const PORT = 8080;
 app.listen(PORT, () =>
     console.log(`listening on port ${PORT} -- YOU CAN DO THIS!`));

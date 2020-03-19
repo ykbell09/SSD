@@ -27,14 +27,3 @@ const resolvers = {
 }
 
 export default resolvers;
-
-
-// SAMPLE CODE FROM LESSON
-
-// loginSample: async ({ loginInput: { email_address, password } },
-//     { session }) => {
-//     const member = await getMemberByEmail(email_address);
-//     const matches = compareHash(password, member.password);
-//     session.user = matches ? user : null;
-//     return session.user;
-// },

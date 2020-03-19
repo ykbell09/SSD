@@ -118,3 +118,25 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
                 loggedInDiv.appendChild(logInMessageH3);
             })
     });
+
+// CHECKS THE SESSION -- not yet working
+// document.addEventListener('load', () => {
+//     const query = `query currentMember {
+//         currentMember {
+//             id
+//         }
+//     }`;
+
+//     fetch('/api/graphql', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//         },
+//         body: JSON.stringify(query)
+//     })
+// })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log(data)
+//     });
