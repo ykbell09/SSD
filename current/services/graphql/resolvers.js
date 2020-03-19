@@ -20,7 +20,6 @@ const resolvers = {
         const member = await getMemberByEmail(email_address);
         const matches = await compareHash(password, member.password);
         session.member = matches ? member : null;
-        console.log(member, matches, password, member.password)
         return session.member;
     },
     currentMember: (args, { session }) => session.member,

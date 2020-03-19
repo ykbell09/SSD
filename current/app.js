@@ -11,10 +11,11 @@ const app = express();
 // sessions middleware
 const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
 const KnexSessionStore = ConnectSessionKnex(session);
+const store = new KnexSessionStore({ knex });
 app.use(session({
-    store: new KnexSessionStore({ knex }),
-    secret: 'SecretPhrase',
-    cookie: { maxAge: ONE_WEEK }
+    store,
+    cookie: { maxAge: ONE_WEEK },
+    secret: 'uniquesecrettextgoeshere'
 }));
 
 // Error handler 
@@ -23,7 +24,10 @@ if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
     app.use(function (err, req, res, next) {
         console.error(err);
         // then:
-        res.status(500).send();
+        res.status(500).send({
+            error: 'GENERIC',
+            description: 'Something went wrong. Please try again later.',
+        });
         // or:
         // res.send(errPageHTML);
     });
