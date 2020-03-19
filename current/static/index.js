@@ -145,7 +145,7 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
 //         },
 
 //         // I think there problem is somewhere here ... 
-//         body: JSON.stringify({query,})
+//         body: JSON.stringify({query})
 //     })
 // })
 //     .then(response => response.json())
