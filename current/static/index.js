@@ -130,25 +130,25 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
 });
 
 // CHECKS THE SESSION to keep the user logged in on refresh -- not yet working
-document.body.addEventListener('load', () => {
-    const query = `query getCurrentMemeber{
-        currentMember {
-            id
-        }
-    }`;
+// document.body.addEventListener('load', () => {
+//     const query = `query getCurrentMemeber{
+//         currentMember {
+//             id
+//         }
+//     }`;
 
-    fetch('/api/graphql', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
+//     fetch('/api/graphql', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//         },
 
-        // I think there problem is somewhere here ... 
-        body: JSON.stringify({query, variables})
-    })
-})
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-    });
+//         // I think there problem is somewhere here ... 
+//         body: JSON.stringify({query,})
+//     })
+// })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log(data)
+//     });
