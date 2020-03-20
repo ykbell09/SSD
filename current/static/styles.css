@@ -133,3 +133,7 @@ button:active {
 .hide {
   display: none;
 }
+
+.welcome-message {
+  text-align: center;
+}

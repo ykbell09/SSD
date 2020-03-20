@@ -75,11 +75,20 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
     })
         .then(response => response.json())
         .then(data => {
+
             if (data.data.signUp == null) {
                 alert('Your sign in failed because you already have an account, or you did not enter a password.');
             } else {
                 alert('You are now a member! Your new member ID is ' + data.data.signUp.id);
             }
+
+            // CLEAR ANY EXISTING WELCOME MESSAGE
+            if (document.querySelector('.welcome-text') !== null) {
+                document.querySelector('.welcome-text').remove()
+            };
+
+            document.querySelector('#addForm').reset();
+
         })
 });
 
@@ -113,42 +122,61 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
             if (data.data.login == null) {
                 alert('Login Failed');
             } else {
-                const memberId = data.data.login.id;
 
-                const loggedOutDiv = document.querySelector('.loggedOutDefault');
-                loggedOutDiv.className = 'hide';
-                const joinDiv = document.querySelector('.subscribe');
-                joinDiv.className = 'hide';
-                const loggedInDiv = document.querySelector('.loggedInDefault');
-                loggedInDiv.className = 'show';
-                const logInMessageH3 = document.createElement('h3');
-                logInMessageH3.innerHTML = 'Welcome, member ' + memberId + ' !';
-                loggedInDiv.appendChild(logInMessageH3);
+                // CLEAR EXISTING MESSAGE
+                if (document.querySelector('.welcome-text') !== null) {
+                    document.querySelector('.welcome-text').remove()
+                };
+                
+                // CREATES NEW MESSAGE
+                const memberId = data.data.login.id;
+                const welcomeMessageDiv = document.querySelector('.welcome-message');
+                const welcomeMessageEl = document.createElement('h3');
+                welcomeMessageEl.className = 'welcome-text';
+                welcomeMessageEl.innerHTML = 'welcome, member ' + memberId;
+                welcomeMessageDiv.appendChild(welcomeMessageEl);
+                document.querySelector('#loginForm').reset();
 
             };
         })
 });
 
-// CHECKS THE SESSION to keep the user logged in on refresh -- not yet working
-// document.body.addEventListener('load', () => {
-//     const query = `query getCurrentMemeber{
-//         currentMember {
-//             id
-//         }
-//     }`;
+// CHECKS THE SESSION to keep the user logged in on refresh
+document.addEventListener('DOMContentLoaded', () => {
 
-//     fetch('/api/graphql', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Accept': 'application/json',
-//         },
+    const query = `query getLoggedInMember {
+        currentMember {
+            id
+        }
+    }`;
 
-//         // I think there problem is somewhere here ... 
-//         body: JSON.stringify({query})
-//     })
-// })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data)
-//     });
+    fetch('/api/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'applicaton/json'
+        },
+        body: JSON.stringify({query})
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            // CLEAR EXISTING MESSAGE
+            if (document.querySelector('.welcome-text') !== null) {
+                document.querySelector('.welcome-text').remove()
+            };
+
+            // CREATES NEW MESSAGE
+            if (data.data.currentMember !== null) {
+                
+                const memberId = data.data.currentMember.id;
+                const welcomeMessageDiv = document.querySelector('.welcome-message');
+                const welcomeMessageEl = document.createElement('h3');
+                welcomeMessageEl.className = 'welcome-text';
+                welcomeMessageEl.innerHTML = 'welcome back, member ' + memberId;
+                welcomeMessageDiv.appendChild(welcomeMessageEl);
+            };        
+
+    })
+
+});

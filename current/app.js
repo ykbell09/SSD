@@ -8,7 +8,7 @@ import resolvers from './services/graphql/resolvers';
 
 const app = express();
 
-// sessions middleware
+// SESSIONS MIDDLEWARE
 const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
 const KnexSessionStore = ConnectSessionKnex(session);
 const store = new KnexSessionStore({ knex });
@@ -18,36 +18,36 @@ app.use(session({
     secret: 'uniquesecrettextgoeshere'
 }));
 
-// Error handler 
-const { NODE_ENV } = process.env;
-if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
-    app.use(function (err, req, res, next) {
-        console.error(err);
-        // then:
-        res.status(500).send({
-            error: 'GENERIC',
-            description: 'Something went wrong. Please try again later.',
-        });
-        // or:
-        // res.send(errPageHTML);
-    });
-}
-
-
-// graphql endpoint
+// GRAPHQL ENDPOINT
 const env = process.env.NODE_ENV || 'development';
 app.use('/api/graphql', graphqlHTTP({
     graphiql: env === 'development',
     schema,
     rootValue: resolvers
-}))
+}));
 
-// static routes
+// STATIC ROUTES
 const staticRoute = express.static('static');
 app.use('/', staticRoute);
 app.use('/static', staticRoute);
 
-// local port
-const PORT = 8080;
+// GLOBAL ERROR HANDLER
+const { NODE_ENV } = process.env;
+// COMMENT OUT IF STATEMENT FOR TESTING
+if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
+app.use(function (err, req, res, next) {
+    console.error(err);
+    // then:
+    res.status(500).send({
+        error: 'GENERIC',
+        description: 'Something went wrong. Please try again later.',
+    });
+    // or:
+    // res.send(errPageHTML);
+})
+};
+
+// LOCAL PORT
+const PORT = 8000;
 app.listen(PORT, () =>
     console.log(`listening on port ${PORT} -- YOU CAN DO THIS!`));
