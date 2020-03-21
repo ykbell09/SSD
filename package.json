@@ -9,8 +9,8 @@
   "scripts": {
     "make-db": "dropdb --username=postgres --if-exists current && createdb --username=postgres current && psql -U postgres -d current -f sql/schema.sql && psql -U postgres -d current -f sql/seed.sql",
 
-    "migrate": "knex migrate:latest",
-    "seed": "knex seed:run",
+    "migrate": "npm run knex -- migrate:latest",
+    "seed": "npm run knex -- seed:run",
     "build": "npm run migrate; npm run seed",
     "start": "node -r esm app.js"
   },
