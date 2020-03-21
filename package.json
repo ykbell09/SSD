@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "last two weeks assignments",
   "main": "app.js",
+  "engines": {
+    "node": "12.16.x"
+  },
   "scripts": {
     "make-db": "dropdb --username=postgres --if-exists current && createdb --username=postgres current && psql -U postgres -d current -f sql/schema.sql && psql -U postgres -d current -f sql/seed.sql",
 
