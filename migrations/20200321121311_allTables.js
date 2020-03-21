@@ -5,7 +5,6 @@ exports.up = async knex => {
         table.increments('id').primary();
         table.string('distiller_name').unique().notNullable();
         table.timestamp('added_on').defaultTo(knex.fn.now()).notNullable();
-
     });
     await knex.schema.dropTableIfExists('spirits');
     await knex.schema.createTable('spirits', table => {
@@ -17,14 +16,14 @@ exports.up = async knex => {
             .references('distiller_id')
             .onDelete('cascade')
             .onUpdate('cascade');
-    })
+    });
     await knex.schema.dropTableIfExists('members');
     await knex.schema.createTable('members', table => {
         table.increments('id').primary();
         table.string('email_address', 30).notNullable().unique();
         table.string('password').notNullable().unique();
         table.timestamp('joined').defaultTo(knex.fn.now()).notNullable();
-    })
+    });
 };
 
 exports.down = function (knex) {
