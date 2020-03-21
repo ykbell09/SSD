@@ -1,7 +1,7 @@
 {
   "name": "ssd_proj",
   "version": "1.0.0",
-  "description": "last two weeks assignments",
+  "description": "week 8 assignment",
   "main": "app.js",
   "engines": {
     "node": "12.16.x"
