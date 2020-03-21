@@ -2,10 +2,10 @@
   "name": "ssd_proj",
   "version": "1.0.0",
   "description": "last two weeks assignments",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "make-db": "dropdb --username=postgres --if-exists current && createdb --username=postgres current && psql -U postgres -d current -f sql/schema.sql && psql -U postgres -d current -f sql/seed.sql",
-    "start": "node -r esm index.js"
+    "start": "node -r esm app.js"
   },
   "repository": {
     "type": "git",
