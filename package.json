@@ -7,12 +7,12 @@
     "node": "12.16.x"
   },
   "scripts": {
-    "make-db": "dropdb --username=postgres --if-exists current && createdb --username=postgres current && psql -U postgres -d current -f sql/schema.sql && psql -U postgres -d current -f sql/seed.sql",
-
-    "migrate": "npm run knex -- migrate:latest",
-    "seed": "npm run knex -- seed:run",
-    "build": "npm run migrate; npm run seed",
-    "start": "node -r esm app.js"
+    "local-start": "NODE_ENV=development nodemon -r esm app.js",  
+    
+    "migrate": "knex --esm -- migrate:latest",
+    "seed": "knex --esm -- seed:run",
+    "start": "node -r esm app.js",
+    "test": "NODE_ENV=development mocha --exit -r esm test/index.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
   "homepage": "https://github.com/ykbell09/SSD#readme",
   "dependencies": {
     "bcrypt": "^4.0.1",
+    "chai": "^4.2.0",
     "connect-session-knex": "^1.6.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
@@ -33,6 +34,7 @@
     "express-session": "^1.17.0",
     "graphql": "^14.6.0",
     "knex": "^0.20.12",
+    "mocha": "^7.1.1",
     "pg": "^7.18.2"
   }
 }

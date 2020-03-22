@@ -1,3 +1,4 @@
+
 // graphql api to display spirits by distiller using option selected by client
 document.querySelector('#searchSelect').addEventListener('change', () => {
     // GETS THE DISTILLER ID SELCTED BY CLIENT - selected_id
@@ -26,7 +27,7 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
             // CLEARS LIST FROM ANY PREVIOUS SEARCH
             if (document.querySelector('.resultList') !== null) {
                 document.querySelector('.resultList').remove()
-            };
+            }
 
             data = data.data.spiritsByDistiller.map(spirit => `${spirit.spirit_name}`)
 
@@ -52,44 +53,56 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const addEmail = document.querySelector('#addEmail').value;
     const addPassword = document.querySelector('#addPassword').value;
-    // const memberObject = { email_address: addEmail, password: addPassword };
+    const addUsername = document.querySelector('#addUsername').value;
 
-    const mutationQuery = `mutation newMemberSignUp($email_address: String!, $password: String!) {
+    const mutationQuery = `mutation newMemberSignUp($email_address: String!, $password: String!, $username: String!) {
         signUp(member: {
             email_address: $email_address,
             password: $password,
+            username: $username
         }) {
+            username
             id
             }
         }`;
 
-    fetch('api/graphql', {
+    fetch('/api/graphql', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
         body: JSON.stringify({
-            query: mutationQuery, variables: { email_address: addEmail, password: addPassword }
+            query: mutationQuery, variables: { email_address: addEmail, password: addPassword, username: addUsername }
         })
     })
         .then(response => response.json())
         .then(data => {
-
+            
+            // ALERTS SUCCESS OR FAILURE
             if (data.data.signUp == null) {
-                alert('Your sign in failed because you already have an account, or you did not enter a password.');
+                alert('Something when wrong! It is possible your sign up failed because you already have an account, or you did not complete all fields.');
             } else {
-                alert('You are now a member! Your new member ID is ' + data.data.signUp.id);
+                alert('You are now a member, ' + data.data.signUp.username + '! Your new member ID is ' + data.data.signUp.id);
             }
+
+            // CLEARS FORM
+            document.querySelector('#addForm').reset();
 
             // CLEAR ANY EXISTING WELCOME MESSAGE
             if (document.querySelector('.welcome-text') !== null) {
                 document.querySelector('.welcome-text').remove()
-            };
+            }
 
-            document.querySelector('#addForm').reset();
+            // CREATES NEW MESSAGE
 
-        })
+            const username = data.data.signUp.username;
+            const welcomeMessageDiv = document.querySelector('.welcome-message');
+            const welcomeMessageEl = document.createElement('h3');
+            welcomeMessageEl.className = 'welcome-text';
+            welcomeMessageEl.innerHTML = 'welcome, ' + username;
+            welcomeMessageDiv.appendChild(welcomeMessageEl);
+        });
 });
 
 // LOG IN button
@@ -100,13 +113,13 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
     const mutationQuery = `mutation memberLogin($email_address: String!, $password: String!) {
             login(member: {
                 email_address: $email_address,
-                password: $password,
+                password: $password
             }) {
-                id
+                username
             }
         }`;
 
-    fetch('api/graphql', {
+    fetch('/api/graphql', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -118,7 +131,8 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
     })
         .then(response => response.json())
         .then(data => {
-            // if... else statment -- alert login failed
+
+            // if... else statment -- ALERT IF LOG IN FAILED
             if (data.data.login == null) {
                 alert('Login Failed');
             } else {
@@ -126,18 +140,18 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
                 // CLEAR EXISTING MESSAGE
                 if (document.querySelector('.welcome-text') !== null) {
                     document.querySelector('.welcome-text').remove()
-                };
+                }
                 
                 // CREATES NEW MESSAGE
-                const memberId = data.data.login.id;
+                const username = data.data.login.username;
                 const welcomeMessageDiv = document.querySelector('.welcome-message');
                 const welcomeMessageEl = document.createElement('h3');
                 welcomeMessageEl.className = 'welcome-text';
-                welcomeMessageEl.innerHTML = 'welcome, member ' + memberId;
+                welcomeMessageEl.innerHTML = 'welcome, ' + username;
                 welcomeMessageDiv.appendChild(welcomeMessageEl);
                 document.querySelector('#loginForm').reset();
 
-            };
+            }
         })
 });
 
@@ -164,18 +178,39 @@ document.addEventListener('DOMContentLoaded', () => {
             // CLEAR EXISTING MESSAGE
             if (document.querySelector('.welcome-text') !== null) {
                 document.querySelector('.welcome-text').remove()
-            };
+            }
 
             // CREATES NEW MESSAGE
             if (data.data.currentMember !== null) {
                 
-                const memberId = data.data.currentMember.id;
+                const userId = data.data.currentMember.id;
                 const welcomeMessageDiv = document.querySelector('.welcome-message');
                 const welcomeMessageEl = document.createElement('h3');
                 welcomeMessageEl.className = 'welcome-text';
-                welcomeMessageEl.innerHTML = 'welcome back, member ' + memberId;
+                welcomeMessageEl.innerHTML = 'welcome back, ' + userId;
                 welcomeMessageDiv.appendChild(welcomeMessageEl);
-            };        
+            }   
+            
+            // HIDES LOGIN AND SIGN UP INFO AND SHOWS USER PROFILE
+            // if (data.data.currentMember !== null) {
+            //     const forms = document.querySelectorAll('.member-container');
+            //     forms.forEach(element => {
+            //         element.className = 'hide';
+            //     });
+                
+                // ADDS PROFILE TITLE H2
+            //     const profile = document.querySelector('.member-profile');
+            //     profile.className = 'show';
+            //     const profileHead = document.createElement('h3');
+            //     profileHead.className = 'item';
+            //     profileHead.innerHTML = 'your profile';
+            //     profile.appendChild(profileHead);
+
+            //     const displayName = data.data.currentMember.id;
+            //     const displayNameP = document.createElement('p');
+            //     displayNameP.innerHtml = displayName;
+            //     profileHead.appendChild(displayNameP);
+            // };
 
     })
 

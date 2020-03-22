@@ -17,8 +17,8 @@
     </div>
     <div class="welcome-message"></div>
     <div class="item-container">
-
-        <div class="login item">
+<section class="member-container">
+            <div class="login item">
             <!-- log in to user account -->
 
             <!-- section to display when user is logged in -->
@@ -40,11 +40,15 @@
             </section>
 
         </div>
-
+</section>
+<section class="member-container">
         <div class="subscribe item">
             <!-- add to users list  -->
             <h3>join the club</h3>
             <form id="addForm">
+                <p>
+                    <label>username <input class="field" id="addUsername" name="addUsername" placeholder="username" /></label>
+                </p>
                 <p>
                     <label>email <input class="field" id="addEmail" name="addEmail"
                             placeholder="email address" /></label>
@@ -56,16 +60,10 @@
                 <input class="submit" type="submit" value="sign up" />
             </form>
 
-            <!-- remove from users list
-            <h3>unsubsribe</h3>
-            <form id="deleteForm">
-                <p>
-                    <label>email <input class="field" id="removeEmail" name="removeEmail" placeholder="email" /></label>
-                </p>
-                <input class="submit" type="submit" value="unsubscribe" />
-            </form> -->
-
+ 
         </div>
+        </section>
+        <section class="member-profile"></section>
         <div class="search item">
             <!-- seach by distiller -->
             <label for="search-box">

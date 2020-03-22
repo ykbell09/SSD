@@ -3,8 +3,8 @@ import session from 'express-session';
 import ConnectSessionKnex from 'connect-session-knex';
 import knex from './database';
 import graphqlHTTP from 'express-graphql';
-import schema from './services/graphql/schema';
-import resolvers from './services/graphql/resolvers';
+import schema from './graphql/schema';
+import resolvers from './graphql/resolvers';
 
 const app = express();
 
@@ -47,11 +47,12 @@ app.use(function (err, req, res, next) {
 })
 };
 
-// LOCAL PORT
-// const PORT = 8000;
-// app.listen(PORT, () =>
-//     console.log(`listening on port ${PORT} -- YOU CAN DO THIS!`));
+// LOCAL PORT 
+const PORT = 8000;
+app.listen(PORT, () =>
+    console.log(`listening on port ${PORT} -- YOU CAN DO THIS!`));
 
-app.listen(process.env.PORT, () =>
-    console.log(`listening on port ${process.env.PORT}`)
-);
+// UNCOMMENT FOR DEPLOYMENT
+// app.listen(process.env.PORT, () =>
+//     console.log(`listening on port ${process.env.PORT}`)
+// );

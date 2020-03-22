@@ -65,8 +65,9 @@ h3, h4 {
 }
 
 .subscribe,
-.update-website {
+.login {
   grid-column: 1 / span 1;
+  text-align: right;
 }
 
 .search {
@@ -86,7 +87,6 @@ button,
   padding: 8px 20px;
   margin: 0 2px;
   border-radius: 3px;
-  font-weight: lighter;
   letter-spacing: 1px;
   font-size: 15px;
   cursor: pointer;
@@ -95,7 +95,6 @@ button,
   font-weight: 100;
   text-align: center;
   margin-top: 20px;
-  display: block;
 }
 
 .search {
@@ -124,12 +123,10 @@ button:active {
   outline: none;
 }
 
-.loggedOutDefault,
 .show {
   display: block;
 }
 
-.loggedInDefault,
 .hide {
   display: none;
 }
