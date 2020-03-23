@@ -1,4 +1,4 @@
-import { getSpiritsByDistiller, getMemberByEmail, createMember, } from '../services/functions';
+import { getSpiritsByDistiller, getMemberByEmail, createMember, updateMemberInfo } from '../services/functions';
 import { compareHash } from '../services/auth';
 
 // ORIGINAL RESOLVERS
@@ -24,10 +24,16 @@ const resolvers = {
     },
     currentMember: (args, { session }) => session.member,
 
-    // updateMember: async({ member: { email_address, password, username } }, { session }
-    // ) => {
-    //     // insert code to update database?
-    // }
+    updateMember: async (
+        { member: { email_address, password, username } },
+        { session }
+    ) => {
+        session.member = await updateMemberInfo(id, email_address, password, username);
+        console.log(session.member);
+        return session.member;
+        
+        
+    }
 
 }
 

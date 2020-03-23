@@ -84,10 +84,7 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
             // ALERTS SUCCESS OR FAILURE
             if (data.data.signUp == null) {
                 alert('Something when wrong! It is possible your sign up failed because you already have an account, or you did not complete all fields.');
-                // CLEAR ANY EXISTING WELCOME MESSAGE
-                if (document.querySelector('.welcome-text') !== null) {
-                    document.querySelector('.welcome-text').remove()
-                }
+
                 // CLEARS FORM
                 document.querySelector('#addForm').reset();
 
@@ -96,7 +93,7 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
 
                 // GET MEMBER DATA
                 const username = data.data.signUp.username;
-                const userEmail = data.data.signUp.userEmail;
+                const userEmail = data.data.signUp.email_address;
                     
                 // CLEARS FORM
                 document.querySelector('#addForm').reset();
@@ -199,7 +196,6 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
                 document.querySelector('#profileUsername').innerHTML = username;
                 document.querySelector('#profileEmail').innerHTML = userEmail;
 
-
             }
         })
 });
@@ -224,7 +220,7 @@ document.querySelector('#logoutForm').addEventListener('submit', (e) => {
 
 });
 
-// UPDATE FORM -- UPDATES INFORMATION MEMBERS TABLE
+// UPDATE FORM -- UPDATES INFORMATION IN MEMBERS TABLE
 document.querySelector('#updateForm').addEventListener('submit', (e) => {
     e.preventDefault();
 

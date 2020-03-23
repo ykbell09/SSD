@@ -12,7 +12,7 @@ export const getSpiritsByDistiller = async selected_id => {
 // CREATE QUERY -- sign up for new members
 export const createMember = async (email_address, password, username) => {
     const [member] = await knex('members')
-        .insert({ email_address, password: await hashPass(password, 10), username })
+        .insert({ email_address, password: await hashPass(password), username })
         .returning(['id', 'email_address', 'password', 'joined', 'username']);
     return member;
 };
@@ -25,6 +25,18 @@ export const getMemberByEmail = async email => {
         .returning('id', 'email_address', 'password', 'joined', 'username');
     return member;
 };
+
+// UPDATE QUEREY -- update member info
+export const updateMemberInfo = async (id, email_address, password, username) => {
+    const newPassword = await hashPass(password);
+    console.log(newPassword);
+    const [member] = await knex('members')
+        .update({ email_address, password: newPassword, username })
+        .where( {id: id} )
+        .returning('id', 'email_address', 'password', 'joined', 'username');
+    console.log(member);
+    return member;
+}
 
 
 
