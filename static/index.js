@@ -232,15 +232,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // IF MEMBER IS STILL SIGNED IN
             if (data.data.currentMember !== null) {
 
-                // CLEAR EXISTING MESSAGE
-                if (document.querySelector('.welcome-text') !== null) {
-                    document.querySelector('.welcome-text').remove()
-                }
                 // GETS MEMBER DATA
                 const username = data.data.currentMember.username;
                 const userEmail = data.data.currentMember.email_address
 
-                // CREATES NEW MESSAGE
+                // CLEARS EXISTING MESSAGE AND CREATES NEW MESSAGE
+                // if (document.querySelector('.welcome-text') !== null) {
+                //     document.querySelector('.welcome-text').remove()
+                // }
                 // const welcomeMessageDiv = document.querySelector('.welcome-message');
                 // const welcomeMessageEl = document.createElement('h3');
                 // welcomeMessageEl.className = 'welcome-text';
