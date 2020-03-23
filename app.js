@@ -26,6 +26,11 @@ app.use('/api/graphql', graphqlHTTP({
     rootValue: resolvers
 }));
 
+app.get('/logout', function (req, res) {
+    req.session.destroy();
+    res.end('/');
+});
+
 // STATIC ROUTES
 const staticRoute = express.static('static');
 app.use('/', staticRoute);

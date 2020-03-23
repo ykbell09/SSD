@@ -63,6 +63,7 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
             username: $username
         }) {
             username
+            email_address
             id
             }
         }`;
@@ -93,20 +94,36 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
             } else {
                 alert('You are now a member, ' + data.data.signUp.username + '! Your new member ID is ' + data.data.signUp.id);
 
-                // CLEAR ANY EXISTING WELCOME MESSAGE
-                if (document.querySelector('.welcome-text') !== null) {
-                    document.querySelector('.welcome-text').remove()
-                }
+                // GET MEMBER DATA
+                const username = data.data.signUp.username;
+                const userEmail = data.data.signUp.userEmail;
+                    
                 // CLEARS FORM
                 document.querySelector('#addForm').reset();
 
+                // HIDES LOGIN AND SIGNUP FORMS, SHOW PROFILE
+                const forms = document.querySelectorAll('.member');
+                forms.forEach(element => {
+                    element.className = 'hide member item';
+                });
+                document.querySelector('.profile').className = 'show profile item';
+
+                // SHOWS MEMBER DATA ON PROFILE
+                document.querySelector('#profileUsername').innerHTML = username;
+                document.querySelector('#profileEmail').innerHTML = userEmail;
+
+                
+                // CLEAR ANY EXISTING WELCOME MESSAGE
+                // if (document.querySelector('.welcome-text') !== null) {
+                //     document.querySelector('.welcome-text').remove()
+                // }       
                 // CREATES NEW MESSAGE IF SIGN UP IS SUCCESSFUL
-                const username = data.data.signUp.username;
-                const welcomeMessageDiv = document.querySelector('.welcome-message');
-                const welcomeMessageEl = document.createElement('h3');
-                welcomeMessageEl.className = 'welcome-text';
-                welcomeMessageEl.innerHTML = 'welcome, ' + username;
-                welcomeMessageDiv.appendChild(welcomeMessageEl);
+                // const welcomeMessageDiv = document.querySelector('.welcome-message');
+                // const welcomeMessageEl = document.createElement('h3');
+                // welcomeMessageEl.className = 'welcome-text';
+                // welcomeMessageEl.innerHTML = 'welcome, ' + username;
+                // welcomeMessageDiv.appendChild(welcomeMessageEl);
+
             }
 
         });
@@ -125,6 +142,7 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
                 password: $password
             }) {
                 username
+                email_address
             }
         }`;
 
@@ -144,27 +162,31 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
             // if... else statment -- ALERT IF LOG IN FAILED
             if (data.data.login == null) {
                 alert('Login Failed');
+
                 // CLEARS FORM
                 document.querySelector('#loginForm').reset();
 
             } else {
 
+                // GETS USER DATA
+                const username = data.data.login.username;
+                const userEmail = data.data.login.email_address;
+
                 // CLEARS FORM
                 document.querySelector('#loginForm').reset();
-
+                
                 // CLEAR EXISTING MESSAGE
-                if (document.querySelector('.welcome-text') !== null) {
-                    document.querySelector('.welcome-text').remove()
-                }
+                // if (document.querySelector('.welcome-text') !== null) {
+                //     document.querySelector('.welcome-text').remove()
+                // }
                 
                 // CREATES NEW MESSAGE
-                const username = data.data.login.username;
-                const welcomeMessageDiv = document.querySelector('.welcome-message');
-                const welcomeMessageEl = document.createElement('h3');
-                welcomeMessageEl.className = 'welcome-text';
-                welcomeMessageEl.innerHTML = 'welcome, ' + username;
-                welcomeMessageDiv.appendChild(welcomeMessageEl);
-                document.querySelector('#loginForm').reset();
+                // const welcomeMessageDiv = document.querySelector('.welcome-message');
+                // const welcomeMessageEl = document.createElement('h3');
+                // welcomeMessageEl.className = 'welcome-text';
+                // welcomeMessageEl.innerHTML = 'welcome, ' + username;
+                // welcomeMessageDiv.appendChild(welcomeMessageEl);
+                // document.querySelector('#loginForm').reset();
 
                 // HIDES LOGIN AND SIGNUP FORMS, SHOW PROFILE
                 const forms = document.querySelectorAll('.member');
@@ -173,12 +195,16 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
                 });
                 document.querySelector('.profile').className = 'show profile item';
 
+                // SHOWS MEMBER DATA ON PROFILE
+                document.querySelector('#profileUsername').innerHTML = username;
+                document.querySelector('#profileEmail').innerHTML = userEmail;
+
+
             }
         })
 });
 
-// THIS NEED WORK!!!
-// SIGN OUT BUTTON LOGS OUT CURRENT USER (CURRENTLY ONLY CHANGES DISPLAY, NEED TO INVALIDATE SESSION)
+// SIGN OUT BUTTON LOGS OUT CURRENT USER AND UPDATES UI
 document.querySelector('#logoutForm').addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -192,6 +218,9 @@ document.querySelector('#logoutForm').addEventListener('submit', (e) => {
     if (document.querySelector('.welcome-text') !== null) {
         document.querySelector('.welcome-text').remove()
     }
+
+    // DESTROY CURRENT SESSION
+    fetch('/logout')
 
 });
 

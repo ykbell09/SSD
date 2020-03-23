@@ -19,7 +19,6 @@ import { buildSchema } from 'graphql';
      password: String!
      joined: Date!
      username: String!
-
  }
  type Query {
      spiritsByDistiller(distiller_id: ID): [Spirit]
