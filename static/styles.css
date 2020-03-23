@@ -71,19 +71,15 @@ h3, h4 {
 }
 
  /* MEMBER FORMS  */
-.subscribe,
-.login,
+.member,
 .profile {
   grid-column: 1 / span 1;
   text-align: right;
 }
 
-/* .profile {
-  display: none; 
-} */
-
 button,
-.submit {
+.submit,
+.logout {
   border: 0;
   padding: 8px 20px;
   margin: 0 2px;
@@ -138,10 +134,11 @@ input.field {
 
 
  /* DOM MANIPULATION HIDE/SHOW */
-.show {
-  display: block;
-}
 
 .hide {
   display: none;
+}
+
+.show {
+  display: block;
 }

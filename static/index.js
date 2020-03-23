@@ -166,13 +166,36 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
                 welcomeMessageDiv.appendChild(welcomeMessageEl);
                 document.querySelector('#loginForm').reset();
 
-                // HIDES LOGIN AND SIGNUP FORMS
-                
+                // HIDES LOGIN AND SIGNUP FORMS, SHOW PROFILE
+                const forms = document.querySelectorAll('.member');
+                forms.forEach(element => {
+                    element.className = 'hide member item';
+                });
+                document.querySelector('.profile').className = 'show profile item';
+
             }
         })
 });
 
-// CHECKS THE SESSION to keep the user logged in on refresh
+// SIGN OUT BUTTON LOGS OUT CURRENT USER (CURRENTLY ONLY CHANGES DISPLAY, NEED TO INVALIDATE SESSION)
+document.querySelector('#logoutForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // HIDES PROFILE, SHOWS LOGIN AND SIGNUP FORMS
+    const forms = document.querySelectorAll('.member');
+    console.log(forms);
+    forms.forEach(element => {
+        element.className = 'show member item';
+    });
+    document.querySelector('.profile').className = 'hide profile item';
+    if (document.querySelector('.welcome-text') !== null) {
+        document.querySelector('.welcome-text').remove()
+    }
+
+
+});
+
+// CHECKS THE SESSION TO KEEP THE USER SIGNED IN ON REFRESH AND UPDATES UI FOR LOGGED IN MEMBER
 document.addEventListener('DOMContentLoaded', () => {
 
     const query = `query getLoggedInMember {
@@ -192,43 +215,31 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
 
-            // CLEAR EXISTING MESSAGE
-            if (document.querySelector('.welcome-text') !== null) {
-                document.querySelector('.welcome-text').remove()
-            }
-
-            // CREATES NEW MESSAGE
+            // IF MEMBER IS STILL SIGNED IN
             if (data.data.currentMember !== null) {
+
+                // CLEAR EXISTING MESSAGE
+                if (document.querySelector('.welcome-text') !== null) {
+                    document.querySelector('.welcome-text').remove()
+                }
                 
+                // CREATES NEW MESSAGE
                 const userId = data.data.currentMember.id;
                 const welcomeMessageDiv = document.querySelector('.welcome-message');
                 const welcomeMessageEl = document.createElement('h3');
                 welcomeMessageEl.className = 'welcome-text';
                 welcomeMessageEl.innerHTML = 'welcome back, ' + userId;
                 welcomeMessageDiv.appendChild(welcomeMessageEl);
+
+                // HIDES LOGIN AND SIGNUP FORMS, SHOW PROFILE
+                const forms = document.querySelectorAll('.member');
+                forms.forEach(element => {
+                    element.className = 'hide member item';
+                });
+                document.querySelector('.profile').className = 'show profile item';
+
             }   
-            
-            // HIDES LOGIN AND SIGN UP INFO AND SHOWS USER PROFILE
-            // if (data.data.currentMember !== null) {
-            //     const forms = document.querySelectorAll('.member-container');
-            //     forms.forEach(element => {
-            //         element.className = 'hide';
-            //     });
-                
-                // ADDS PROFILE TITLE H2
-            //     const profile = document.querySelector('.member-profile');
-            //     profile.className = 'show';
-            //     const profileHead = document.createElement('h3');
-            //     profileHead.className = 'item';
-            //     profileHead.innerHTML = 'your profile';
-            //     profile.appendChild(profileHead);
-
-            //     const displayName = data.data.currentMember.id;
-            //     const displayNameP = document.createElement('p');
-            //     displayNameP.innerHtml = displayName;
-            //     profileHead.appendChild(displayNameP);
-            // };
-
+           
     })
 
 });
