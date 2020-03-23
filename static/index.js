@@ -4,7 +4,7 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
     // GETS THE DISTILLER ID SELCTED BY CLIENT - selected_id
     const selected_id = document.querySelector('#searchSelect').selectedOptions[0].value;
 
-    // GRAPH QL QUERY TO GET LIST OF SPIRITS
+    // GRAPH QL QUERY TO GET LIST OF SPIRITS BY DISTILLER USING SELECT MENU
     const query =
         `query Spirits($distillerId: ID) {
         spiritsByDistiller(distiller_id: $distillerId) {
@@ -48,13 +48,14 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
         })
 });
 
-// SIGN UP button 
+// SIGN UP BUTTON ADDS MEMBER TO MEMBERS TABLE, LOG IN AND SHOW WELCOME 
 document.querySelector('#addForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const addEmail = document.querySelector('#addEmail').value;
     const addPassword = document.querySelector('#addPassword').value;
     const addUsername = document.querySelector('#addUsername').value;
 
+    // DB CREATE QUERY 
     const mutationQuery = `mutation newMemberSignUp($email_address: String!, $password: String!, $username: String!) {
         signUp(member: {
             email_address: $email_address,
@@ -82,32 +83,40 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
             // ALERTS SUCCESS OR FAILURE
             if (data.data.signUp == null) {
                 alert('Something when wrong! It is possible your sign up failed because you already have an account, or you did not complete all fields.');
+                // CLEAR ANY EXISTING WELCOME MESSAGE
+                if (document.querySelector('.welcome-text') !== null) {
+                    document.querySelector('.welcome-text').remove()
+                }
+                // CLEARS FORM
+                document.querySelector('#addForm').reset();
+
             } else {
                 alert('You are now a member, ' + data.data.signUp.username + '! Your new member ID is ' + data.data.signUp.id);
+
+                // CLEAR ANY EXISTING WELCOME MESSAGE
+                if (document.querySelector('.welcome-text') !== null) {
+                    document.querySelector('.welcome-text').remove()
+                }
+                // CLEARS FORM
+                document.querySelector('#addForm').reset();
+
+                // CREATES NEW MESSAGE IF SIGN UP IS SUCCESSFUL
+                const username = data.data.signUp.username;
+                const welcomeMessageDiv = document.querySelector('.welcome-message');
+                const welcomeMessageEl = document.createElement('h3');
+                welcomeMessageEl.className = 'welcome-text';
+                welcomeMessageEl.innerHTML = 'welcome, ' + username;
+                welcomeMessageDiv.appendChild(welcomeMessageEl);
             }
 
-            // CLEARS FORM
-            document.querySelector('#addForm').reset();
-
-            // CLEAR ANY EXISTING WELCOME MESSAGE
-            if (document.querySelector('.welcome-text') !== null) {
-                document.querySelector('.welcome-text').remove()
-            }
-
-            // CREATES NEW MESSAGE
-
-            const username = data.data.signUp.username;
-            const welcomeMessageDiv = document.querySelector('.welcome-message');
-            const welcomeMessageEl = document.createElement('h3');
-            welcomeMessageEl.className = 'welcome-text';
-            welcomeMessageEl.innerHTML = 'welcome, ' + username;
-            welcomeMessageDiv.appendChild(welcomeMessageEl);
         });
 });
 
-// LOG IN button
+// LOG IN BUTTON - CHECKS MEMBERS TABLE AND DISPLAYS WELCOME MESSAGE AND USER PROFILE
 document.querySelector('#loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
+    
+    // GETS CLIENT ENTERED DATA AND QUERIES MEMBERS TABLE
     const loginEmail = document.querySelector('#loginEmail').value;
     const password = document.querySelector('#password').value;
     const mutationQuery = `mutation memberLogin($email_address: String!, $password: String!) {
@@ -135,7 +144,13 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
             // if... else statment -- ALERT IF LOG IN FAILED
             if (data.data.login == null) {
                 alert('Login Failed');
+                // CLEARS FORM
+                document.querySelector('#loginForm').reset();
+
             } else {
+
+                // CLEARS FORM
+                document.querySelector('#loginForm').reset();
 
                 // CLEAR EXISTING MESSAGE
                 if (document.querySelector('.welcome-text') !== null) {
@@ -151,6 +166,8 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
                 welcomeMessageDiv.appendChild(welcomeMessageEl);
                 document.querySelector('#loginForm').reset();
 
+                // HIDES LOGIN AND SIGNUP FORMS
+                
             }
         })
 });
