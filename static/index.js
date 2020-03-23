@@ -177,6 +177,7 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
         })
 });
 
+// THIS NEED WORK!!!
 // SIGN OUT BUTTON LOGS OUT CURRENT USER (CURRENTLY ONLY CHANGES DISPLAY, NEED TO INVALIDATE SESSION)
 document.querySelector('#logoutForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -192,6 +193,18 @@ document.querySelector('#logoutForm').addEventListener('submit', (e) => {
         document.querySelector('.welcome-text').remove()
     }
 
+});
+
+// UPDATE FORM -- UPDATES INFORMATION MEMBERS TABLE
+document.querySelector('#updateForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // GET UPDATED MEMBER DATA FROM FORM
+    const updateUsername = document.querySelector('#updateUsername').value;
+    const updateEmail = document.querySelector('#updateEmail').value;
+    const updatePassword = document.querySelector('#updatePassword').value;
+
+    console.log(updateUsername, updateEmail, updatePassword);
 
 });
 
@@ -200,7 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const query = `query getLoggedInMember {
         currentMember {
-            id
+            username
+            email_address
         }
     }`;
 
@@ -222,14 +236,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (document.querySelector('.welcome-text') !== null) {
                     document.querySelector('.welcome-text').remove()
                 }
-                
+                // GETS MEMBER DATA
+                const username = data.data.currentMember.username;
+                const userEmail = data.data.currentMember.email_address
+
                 // CREATES NEW MESSAGE
-                const userId = data.data.currentMember.id;
-                const welcomeMessageDiv = document.querySelector('.welcome-message');
-                const welcomeMessageEl = document.createElement('h3');
-                welcomeMessageEl.className = 'welcome-text';
-                welcomeMessageEl.innerHTML = 'welcome back, ' + userId;
-                welcomeMessageDiv.appendChild(welcomeMessageEl);
+                // const welcomeMessageDiv = document.querySelector('.welcome-message');
+                // const welcomeMessageEl = document.createElement('h3');
+                // welcomeMessageEl.className = 'welcome-text';
+                // welcomeMessageEl.innerHTML = 'welcome back, ' + username;
+                // welcomeMessageDiv.appendChild(welcomeMessageEl);
 
                 // HIDES LOGIN AND SIGNUP FORMS, SHOW PROFILE
                 const forms = document.querySelectorAll('.member');
@@ -237,6 +253,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     element.className = 'hide member item';
                 });
                 document.querySelector('.profile').className = 'show profile item';
+
+                // SHOWS MEMBER DATA ON PROFILE
+                document.querySelector('#profileUsername').innerHTML = username;
+                document.querySelector('#profileEmail').innerHTML = userEmail;
 
             }   
            
