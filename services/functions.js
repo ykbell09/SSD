@@ -26,12 +26,10 @@ export const getMemberByEmail = async email => {
     return member;
 };
 
-// UPDATE QUEREY -- update member info
-export const updateMemberInfo = async (id, email_address, password, username) => {
-    const newPassword = await hashPass(password);
-    console.log(newPassword);
+// UPDATE QUEREY -- update member username
+export const updateUsername = async (newUsername, id) => {
     const [member] = await knex('members')
-        .update({ email_address, password: newPassword, username })
+        .update({ username: newUsername })
         .where( {id: id} )
         .returning('id', 'email_address', 'password', 'joined', 'username');
     console.log(member);

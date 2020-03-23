@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createMember, updateMemberInfo } from '../../services/functions.js';
+import { createMember, updateUsername } from '../../services/functions.js';
 import knex from '../../database.js';
 
 describe('member functions', () => {
@@ -7,7 +7,7 @@ describe('member functions', () => {
         it('adds a new member and returns an id', async () => {
            
             // CREATE A TEST USER
-            const testUsername = 'testName';
+            const testUsername = 'testUsername';
             const testEmail = 'testEmail';
             const testPass = 'testPass';
             await createMember(testEmail, testPass, testUsername);
@@ -23,32 +23,34 @@ describe('member functions', () => {
         afterEach(async () => {
             await knex('members').truncate();
         });
+        
+        // UPDATE MEMBER INFO TEST WIP
         describe('updateMemberInfo', () => {
-            it('updates member information and returns a member object', async () => {
+            it('updates member username and returns a member object', async () => {
                 
                 // CREATE A TEST USER TO UPDATE
-                const testUsername = 'testName';
-                const testEmail = 'testEmail';
-                const testPass = 'testPass';
+                const testUsername = 'testUsername2';
+                const testEmail = 'testEmail2';
+                const testPass = 'testPass2';
                 await createMember(testEmail, testPass, testUsername);
 
                 // GET NEW USER ID
                 const getUser = await knex('members')
-                    .where({ username: testUsername })
+                    .where({username: testUsername})
                     .select('id')
                     .returning('id');
 
                 // UPDATE TEST USER
-                const updateEmail = 'testUpdateEmail';
-                const updatePassword = 'testUpdatePassword';
-                await updateMemberInfo(updateEmail, updatePassword);
-                
-                // GET USER ID FOR UPDATED USER EMAIL
+                const newUsername = 'testNewUsername';
+                await updateUsername(newUsername, getUser[0].id);
+
+                // RETURN UPDATED USERNAME ID AND CONFIRM IT MATCHES ORIGINAL
                 const updatedUser = await knex('members')
-                    .where({ email_address: updateEmail })
+                    .where({ username: newUsername })
                     .select('id')
                     .returning('id');
-                expect(getuser[0].id).to.equal(updatedUser[0].id);
+                console.log('updated username IS ' + updatedUser[0].id);
+                expect(getUser[0].id).to.equal(updatedUser[0].id);
 
 
 
