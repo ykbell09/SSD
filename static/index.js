@@ -225,15 +225,53 @@ document.querySelector('#updateForm').addEventListener('submit', (e) => {
     e.preventDefault();
 
     // GET UPDATED MEMBER DATA FROM FORM
-    const updateUsername = document.querySelector('#updateUsername').value;
-    const updateEmail = document.querySelector('#updateEmail').value;
-    const updatePassword = document.querySelector('#updatePassword').value;
+    const updatedUsername = document.querySelector('#updateUsername').value;
+    const updatedEmail = document.querySelector('#updateEmail').value;
+    const updatedPassword = document.querySelector('#updatePassword').value;
 
-    console.log(updateUsername, updateEmail, updatePassword);
+    // ALERT IF BUTTON PRESSED WITH NO VALUES ENTERED
+    if (updatedUsername == '' && updatedEmail == '' && updatedPassword == '') {
+        alert('please enter at least one value');
+    }
+    else {
 
+        // IF USERNAME IS ENTERED UPDATE MEMBER USER NAME TABLE
+        if (updatedUsername !== '') {
+            const mutationQuery = `mutation updateUsername($username: String!) {
+            updateUsername(usernameInput: {username: $username}) {
+                username
+            }
+        }`;
+
+            fetch('/api/graphql', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    query: mutationQuery, variables: { username: updatedUsername }
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                
+                    // ALERT SUCCESSFUL CHANGE
+                    console.log(data);
+                    const newUsername = data.data.updateUsername.username;
+                    alert('Your username has been updated to ' + newUsername);
+
+                    // UPDATE PROVILE UI
+                    document.querySelector('#profileUsername').innerHTML = newUsername;
+                });
+        }
+    }
+
+    
 });
 
 // CHECKS THE SESSION TO KEEP THE USER SIGNED IN ON REFRESH AND UPDATES UI FOR LOGGED IN MEMBER
+// XX - REFRESH DOES NOT SHOW UPDATED USER NAME IF THEY CHANGE IT WHILE LOGGED IN AND DON'T LOG OUT -- NEED TO DEBUT THIS
 document.addEventListener('DOMContentLoaded', () => {
 
     const query = `query getLoggedInMember {

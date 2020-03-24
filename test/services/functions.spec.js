@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createMember, updateUsername } from '../../services/functions.js';
+import { createMember, updateUsernameById } from '../../services/functions.js';
 import knex from '../../database.js';
 
 describe('member functions', () => {
@@ -42,7 +42,7 @@ describe('member functions', () => {
 
                 // UPDATE TEST USER
                 const newUsername = 'testNewUsername';
-                await updateUsername(newUsername, getUser[0].id);
+                await updateUsernameById(newUsername, getUser[0].id);
 
                 // RETURN UPDATED USERNAME ID AND CONFIRM IT MATCHES ORIGINAL
                 const updatedUser = await knex('members')

@@ -48,7 +48,6 @@ const resolvers = {
 
     updateUsername: async ({ usernameInput: { username } }, { session }) => {
         const testResult = await updateUsernameById(username, session.member.id);        
-        console.log(testResult);
         return testResult;
 
     },
