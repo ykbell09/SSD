@@ -49,7 +49,6 @@ describe('member functions', () => {
                     .where({ username: newUsername })
                     .select('id')
                     .returning('id');
-                console.log('updated username IS ' + updatedUser[0].id);
                 expect(getUser[0].id).to.equal(updatedUser[0].id);
 
 

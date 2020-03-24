@@ -33,15 +33,23 @@ import { buildSchema } from 'graphql';
      email_address: String!
      password: String!
  }
- input UpdateInput {
-     email_address: String
-     password: String
-     username: String
- }
+input PasswordResetInput {
+    username: String!
+    password: String!
+    key: String!
+}
+input UpdateUsernameInput {
+    username: String!
+}
+ type SuccessResponse { 
+  wasSuccessful: Boolean!
+}
  type Mutation {
      signUp(member: MemberInput!): Member
      login(member: LoginInput!): Member
-     updateMember(member: UpdateInput): Member
+     requestPasswordReset(email_address: String!): SuccessResponse
+     passwordReset(resetInput: PasswordResetInput!): SuccessResponse
+     updateUsername(usernameInput: UpdateUsernameInput): Member
  }
 
 `);

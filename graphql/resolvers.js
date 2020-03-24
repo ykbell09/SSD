@@ -1,5 +1,6 @@
-import { getSpiritsByDistiller, getMemberByEmail, createMember, updateMemberInfo } from '../services/functions';
+import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById } from '../services/functions';
 import { compareHash } from '../services/auth';
+// import { sendResetEmail, getPasswordResetKey } from '../services/email';
 
 // ORIGINAL RESOLVERS
 const resolvers = {
@@ -22,19 +23,37 @@ const resolvers = {
         session.member = matches ? member : null;
         return session.member;
     },
-    currentMember: (args, { session }) => session.member,
+    currentMember: (args, { session }) => session.member,     
 
-    updateMember: async (
-        { member: { email_address, password, username } },
-        { session }
-    ) => {
-        session.member = await updateMemberInfo(id, email_address, password, username);
-        console.log(session.member);
-        return session.member;
-        
-        
-    }
+    requestPasswordReset: async ({ email_address }) => {
+        try {
+            sendResetEmail(await getMemberByEmail(email_address));
+        } catch (err) {
+            return { wasSuccessful: false };
+        }
+        return { wasSuccessful: true };
+    },
 
+    passwordReset: async({
+        resetInput: { email_address, password, key }
+    }, { session }) => {
+        const member = await getMemberByEmail(email_address);
+        const actualKey = getPasswordResetKey(member);
+        if (key !== actualKey)
+            throw new Error('invalid password reset key');
+        changePassword(member.id, password);
+        session.member = member;
+        return member;
+    },
+
+    updateUsername: async ({ usernameInput: { username } }, { session }) => {
+        const testResult = await updateUsernameById(username, session.member.id);        
+        console.log(testResult);
+        return testResult;
+
+    },
+        
+    
 }
 
 export default resolvers;

@@ -26,15 +26,27 @@ export const getMemberByEmail = async email => {
     return member;
 };
 
-// UPDATE QUEREY -- update member username
-export const updateUsername = async (newUsername, id) => {
-    const [member] = await knex('members')
-        .update({ username: newUsername })
-        .where( {id: id} )
+// HELPER FUNCTION - get member by id
+export const getUserById = async (id) => {
+    const member = await knex('members')
+        .select('id', 'email_address', 'password', 'joined', 'username')
+        .where({ id })
         .returning('id', 'email_address', 'password', 'joined', 'username');
-    console.log(member);
+
+    console.log(member[0]);
+};
+
+// UPDATE QUEREY -- update member username WIP
+export const updateUsernameById = async (newUsername, id) => {
+    const [member] = await knex('members')
+        .where({ id: id })
+        .update({ username: newUsername }, ['id', 'email_address', 'password', 'joined', 'username'])
+
     return member;
-}
+};
+
+
+// export const changePassword = async 
 
 
 
