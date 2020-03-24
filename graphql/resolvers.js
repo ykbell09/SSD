@@ -1,4 +1,4 @@
-import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById } from '../services/functions';
+import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById, updateEmailAddressById } from '../services/functions';
 import { compareHash } from '../services/auth';
 // import { sendResetEmail, getPasswordResetKey } from '../services/email';
 
@@ -47,9 +47,14 @@ const resolvers = {
     },
 
     updateUsername: async ({ usernameInput: { username } }, { session }) => {
-        const testResult = await updateUsernameById(username, session.member.id);        
-        return testResult;
+        return await updateUsernameById(username, session.member.id);        
+    },
 
+    updateEmail: async ({ emailInput: { email_address } }, { session }) => {
+        console.log(session.member.id);
+        const test = await updateEmailAddressById(email_address, session.member.id);
+        console.log(test);
+        return test;
     },
         
     

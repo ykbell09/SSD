@@ -41,6 +41,9 @@ input PasswordResetInput {
 input UpdateUsernameInput {
     username: String!
 }
+input UpdateEmailInput {
+    email_address: String!
+}
  type SuccessResponse { 
   wasSuccessful: Boolean!
 }
@@ -50,6 +53,7 @@ input UpdateUsernameInput {
      requestPasswordReset(email_address: String!): SuccessResponse
      passwordReset(resetInput: PasswordResetInput!): SuccessResponse
      updateUsername(usernameInput: UpdateUsernameInput): Member
+     updateEmail(emailInput: UpdateEmailInput): Member
  }
 
 `);

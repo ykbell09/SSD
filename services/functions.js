@@ -39,7 +39,6 @@ export const updateUsernameById = async (newUsername, id) => {
     const [member] = await knex('members')
         .where({ id })
         .update({ username: newUsername }, ['id', 'email_address', 'joined', 'username'])
-
     return member;
 };
 
