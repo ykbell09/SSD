@@ -34,7 +34,7 @@ export const getUserById = async (id) => {
         .returning('id', 'email_address', 'password', 'joined', 'username');
 };
 
-// UPDATE QUEREY -- update member username 
+// UPDATE QUERY -- update member username by id
 export const updateUsernameById = async (newUsername, id) => {
     const [member] = await knex('members')
         .where({ id })
@@ -43,3 +43,10 @@ export const updateUsernameById = async (newUsername, id) => {
     return member;
 };
 
+// UPDATE QUERY -- update member email address by id
+export const updateEmailAddressById = async (newEmail, id) => {
+    const [member] = await knex('members')
+        .where({ id })
+        .update({ email_address: newEmail }, ['id', 'email_address', 'joined', 'username'])
+    return member;
+};
