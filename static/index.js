@@ -1,4 +1,3 @@
-
 // graphql api to display spirits by distiller using option selected by client
 document.querySelector('#searchSelect').addEventListener('change', () => {
     // GETS THE DISTILLER ID SELCTED BY CLIENT - selected_id
@@ -80,7 +79,7 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
     })
         .then(response => response.json())
         .then(data => {
-            
+
             // ALERTS SUCCESS OR FAILURE
             if (data.data.signUp == null) {
                 alert('Something when wrong! It is possible your sign up failed because you already have an account, or you did not complete all fields.');
@@ -94,7 +93,7 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
                 // GET MEMBER DATA
                 const username = data.data.signUp.username;
                 const userEmail = data.data.signUp.email_address;
-                    
+
                 // CLEARS FORM
                 document.querySelector('#addForm').reset();
 
@@ -109,7 +108,7 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
                 document.querySelector('#profileUsername').innerHTML = username;
                 document.querySelector('#profileEmail').innerHTML = userEmail;
 
-                
+
                 // CLEAR ANY EXISTING WELCOME MESSAGE
                 // if (document.querySelector('.welcome-text') !== null) {
                 //     document.querySelector('.welcome-text').remove()
@@ -129,7 +128,7 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
 // LOG IN BUTTON - CHECKS MEMBERS TABLE AND DISPLAYS WELCOME MESSAGE AND USER PROFILE
 document.querySelector('#loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     // GETS CLIENT ENTERED DATA AND QUERIES MEMBERS TABLE
     const loginEmail = document.querySelector('#loginEmail').value;
     const password = document.querySelector('#password').value;
@@ -171,12 +170,12 @@ document.querySelector('#loginForm').addEventListener('submit', (e) => {
 
                 // CLEARS FORM
                 document.querySelector('#loginForm').reset();
-                
+
                 // CLEAR EXISTING MESSAGE
                 // if (document.querySelector('.welcome-text') !== null) {
                 //     document.querySelector('.welcome-text').remove()
                 // }
-                
+
                 // CREATES NEW MESSAGE
                 // const welcomeMessageDiv = document.querySelector('.welcome-message');
                 // const welcomeMessageEl = document.createElement('h3');
@@ -220,24 +219,24 @@ document.querySelector('#logoutForm').addEventListener('submit', (e) => {
 
 });
 
-// UPDATE FORM -- UPDATES INFORMATION IN MEMBERS TABLE
+// UPDATE FORM -- UPDATES USERNAME IN MEMBERS TABLE
 document.querySelector('#updateForm').addEventListener('submit', (e) => {
     e.preventDefault();
 
     // GET UPDATED MEMBER DATA FROM FORM
     const updatedUsername = document.querySelector('#updateUsername').value;
     const updatedEmail = document.querySelector('#updateEmail').value;
-    const updatedPassword = document.querySelector('#updatePassword').value;
+
 
     // ALERT IF BUTTON PRESSED WITH NO VALUES ENTERED
-    if (updatedUsername == '' && updatedEmail == '' && updatedPassword == '') {
+    if (updatedUsername == '' && updatedEmail == '' ) {
         alert('please enter at least one value');
     }
     else {
 
-        // IF USERNAME IS ENTERED UPDATE MEMBER USER NAME TABLE
+        // IF USERNAME ONLY IS ENTERED UPDATE MEMBER TABLE
         if (updatedUsername !== '') {
-            const mutationQuery = `mutation updateUsername($username: String!) {
+            const mutationQueryUsername = `mutation updateUsername($username: String!) {
             updateUsername(usernameInput: {username: $username}) {
                 username
             }
@@ -250,24 +249,93 @@ document.querySelector('#updateForm').addEventListener('submit', (e) => {
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    query: mutationQuery, variables: { username: updatedUsername }
+                    query: mutationQueryUsername, variables: { username: updatedUsername }
                 })
             })
                 .then(response => response.json())
                 .then(data => {
-                
-                    // ALERT SUCCESSFUL CHANGE
-                    console.log(data);
-                    const newUsername = data.data.updateUsername.username;
-                    alert('Your username has been updated to ' + newUsername);
+                    if (updatedEmail === '') {
 
-                    // UPDATE PROVILE UI
-                    document.querySelector('#profileUsername').innerHTML = newUsername;
+                        // ALERT SUCCESSFUL CHANGE
+                        const newUsername = data.data.updateUsername.username;
+                        alert('Your username has been updated to ' + newUsername);
+
+                        // UPDATE PROFILE UI
+                        document.querySelector('#profileUsername').innerHTML = newUsername;
+
+                        // CLEARS FORM
+                        document.querySelector('#updateForm').reset();
+
+                    }
                 });
-        }
-    }
+        } // END OF USERNAME IF
+    } // END OF IF ... ELSE   
+}); // END OF USERNAME UPDATE 
 
-    
+// UPDATE FORM -- UPDATES EMAIL ADDRESS ONLY, OR EMAIL ADDRESS AND USERNAME IN MEMBER TABLE
+document.querySelector('#updateForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // GET UPDATED MEMBER DATA FROM FORM
+    const updatedUsername = document.querySelector('#updateUsername').value;
+    const updatedEmail = document.querySelector('#updateEmail').value;
+
+    // IF EMAIL ADDRESS IS ENTERED UPDATE MEMBER TABLE
+    if (updatedEmail !== '') {
+        const mutationQueryEmail = `mutation updateEmail($email_address: String!) {
+                updateEmail(emailInput: {email_address: $email_address}) {
+                    email_address
+                    username
+                }
+            }`;
+
+        fetch('/api/graphql', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                query: mutationQueryEmail, variables: { email_address: updatedEmail }
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                
+                if (updatedUsername !== '') {
+                    const newUsername = data.data.updateEmail.username;
+                    const newEmail = data.data.updateEmail.email_address;
+
+                    // ALERT NEW INFO
+                    alert('your username has been updated to ' + newUsername + ' and your email address has been updated to ' + newEmail);
+
+                    // UPDATE UI
+                    document.querySelector('#profileEmail').innerHTML = newEmail;
+                    document.querySelector('#profileUsername').innerHTML = newUsername;
+
+                    // CLEARS FORM
+                    document.querySelector('#updateForm').reset();
+
+
+                } else {
+                    const newEmail = data.data.updateEmail.email_address;
+                    const newUsername = data.data.updateEmail.username;
+
+                    // ALERT NEW INFO
+                    alert('your email address has been updated to ' + newEmail);
+
+                    // UPDATE UI
+                    document.querySelector('#profileEmail').innerHTML = newEmail;
+
+                    // CLEARS FORM
+                    document.querySelector('#updateForm').reset();
+
+
+                 }
+
+            });
+
+    }
 });
 
 // CHECKS THE SESSION TO KEEP THE USER SIGNED IN ON REFRESH AND UPDATES UI FOR LOGGED IN MEMBER
@@ -287,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'Content-Type': 'application/json',
             'Accept': 'applicaton/json'
         },
-        body: JSON.stringify({query})
+        body: JSON.stringify({ query })
     })
         .then(response => response.json())
         .then(data => {
@@ -320,8 +388,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('#profileUsername').innerHTML = username;
                 document.querySelector('#profileEmail').innerHTML = userEmail;
 
-            }   
-           
-    })
+            }
+
+        })
 
 });
