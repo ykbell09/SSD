@@ -9,6 +9,31 @@ export const getSpiritsByDistiller = async selected_id => {
         .returning('id', 'spirit_name', 'distiller_id');
 };
 
+// READ QUERY -- get spirits by spirit type
+export const getSpiritsByType = async (spirit_type) => {
+
+    const [spiritType] = await knex('types')
+        .where({ spirit_type })
+        .select('id', 'spirit_type')
+        .returning('id', 'spirit_type');
+    const typeId = spiritType.id;
+
+    const spiritIdList = await knex('join_st')
+        .where({ type_id: typeId })
+        .select('spirit_id', 'type_id')
+        .returning('spirit_id', 'type_id');
+
+    const spiritIdArray = spiritIdList.map((arg) => arg.spirit_id);
+
+    const spiritsByType = await knex('spirits')
+        .select('id', 'spirit_name', 'distiller_id')
+        .whereIn('id', spiritIdArray)
+        .returning('id', 'spirit_name', 'distiller_id');
+
+    return spiritsByType;
+
+};
+
 // CREATE QUERY -- sign up for new members
 export const createMember = async (email_address, password, username) => {
     const [member] = await knex('members')
@@ -50,30 +75,7 @@ export const updateEmailAddressById = async (newEmail, id) => {
     return member;
 };
 
-// READ QUERY -- get spirits by type
-export const getSpiritsByType = async (type) => {
-    
-    const [spiritType] = await knex('types')
-        .where({ type })
-        .select('id', 'type')
-        .returning('id', 'type');
-    const typeId = spiritType.id;
 
-    const spiritIdList = await knex('join_st')
-        .where({ type_id: typeId })
-        .select('spirit_id', 'type_id')
-        .returning('spirit_id', 'type_id');
-
-    const spiritIdArray = spiritIdList.map((arg) => arg.spirit_id);
-
-    const spiritsByType = await knex('spirits')
-        .select('id', 'spirit_name', 'distiller_id')
-        .whereIn('id', spiritIdArray)
-        .returning('id', 'spirit_name', 'distiller_id');
-    
-    return spiritsByType;
-    
-};
 
 
 

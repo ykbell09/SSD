@@ -3,7 +3,7 @@
 exports.up = async knex => {
     await knex.schema.createTable('types', table => {
         table.increments('id').primary();
-        table.string('type', 20).notNullable().unique();
+        table.string('spirit_type', 20).notNullable().unique();
     });
     await knex.schema.createTable('join_st', table => {
         table.integer('spirit_id').notNullable().unique();

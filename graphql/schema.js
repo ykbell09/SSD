@@ -20,11 +20,14 @@ import { buildSchema } from 'graphql';
      joined: Date!
      username: String!
  }
+ type SpiritType {
+     id: ID! 
+     spirit_type: String!
+ }
  type Query {
      spiritsByDistiller(distiller_id: ID): [Spirit]
      currentMember: Member
-
-     
+     spiritsByType(spirit_type: String!): [Spirit]
  }
  input MemberInput {
      email_address: String!

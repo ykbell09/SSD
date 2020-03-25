@@ -87,11 +87,11 @@ describe('member functions', () => {
 });
  
 describe('spirit functions', () => {
-    describe('get array of spirits by type', () => {
-        it('gets a type and returns an array of spirits', async () => {
+    describe('get array of spirits by spirit type', () => {
+        it('gets a spirit type and returns an array of spirits', async () => {
 
-            const type = 'gin';
-            const spiritArray = await getSpiritsByType(type);
+            const spirit_type = 'gin';
+            const spiritArray = await getSpiritsByType(spirit_type);
             expect(spiritArray).to.have.lengthOf(3);
 
         });

@@ -1,4 +1,4 @@
-import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById, updateEmailAddressById } from '../services/functions';
+import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType } from '../services/functions';
 import { compareHash } from '../services/auth';
 // import { sendResetEmail, getPasswordResetKey } from '../services/email';
 
@@ -6,6 +6,10 @@ import { compareHash } from '../services/auth';
 const resolvers = {
     spiritsByDistiller: async ({ distiller_id }) => {
         return await getSpiritsByDistiller(distiller_id);   
+    },
+
+    spiritsByType: async ({ spirit_type }) => {
+        return await getSpiritsByType(spirit_type);
     },
     
     signUp: async (
@@ -15,6 +19,7 @@ const resolvers = {
         session.member = await createMember( email_address, password, username );
         return session.member;        
     },
+
     login: async(
         { member: { email_address, password } }, { session }
     ) => {
