@@ -51,13 +51,13 @@ export const getMemberByEmail = async email => {
     return member;
 };
 
-// HELPER FUNCTION -- get member by id
-export const getUserById = async (id) => {
-    const member = await knex('members')
-        .select('id', 'email_address', 'password', 'joined', 'username')
-        .where({ id })
-        .returning('id', 'email_address', 'password', 'joined', 'username');
-};
+// // HELPER FUNCTION -- get member by id
+// export const getUserById = async (id) => {
+//     const member = await knex('members')
+//         .select('id', 'email_address', 'password', 'joined', 'username')
+//         .where({ id })
+//         .returning('id', 'email_address', 'password', 'joined', 'username');
+// };
 
 // UPDATE QUERY -- update member username by id
 export const updateUsernameById = async (newUsername, id) => {

@@ -30,26 +30,26 @@ const resolvers = {
     },
     currentMember: (args, { session }) => session.member,     
 
-    requestPasswordReset: async ({ email_address }) => {
-        try {
-            sendResetEmail(await getMemberByEmail(email_address));
-        } catch (err) {
-            return { wasSuccessful: false };
-        }
-        return { wasSuccessful: true };
-    },
+    // requestPasswordReset: async ({ email_address }) => {
+    //     try {
+    //         sendResetEmail(await getMemberByEmail(email_address));
+    //     } catch (err) {
+    //         return { wasSuccessful: false };
+    //     }
+    //     return { wasSuccessful: true };
+    // },
 
-    passwordReset: async({
-        resetInput: { email_address, password, key }
-    }, { session }) => {
-        const member = await getMemberByEmail(email_address);
-        const actualKey = getPasswordResetKey(member);
-        if (key !== actualKey)
-            throw new Error('invalid password reset key');
-        changePassword(member.id, password);
-        session.member = member;
-        return member;
-    },
+    // passwordReset: async({
+    //     resetInput: { email_address, password, key }
+    // }, { session }) => {
+    //     const member = await getMemberByEmail(email_address);
+    //     const actualKey = getPasswordResetKey(member);
+    //     if (key !== actualKey)
+    //         throw new Error('invalid password reset key');
+    //     changePassword(member.id, password);
+    //     session.member = member;
+    //     return member;
+    // },
 
     updateUsername: async ({ usernameInput: { username } }, { session }) => {
         return await updateUsernameById(username, session.member.id);        
