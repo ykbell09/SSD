@@ -98,7 +98,7 @@ button:active {
   outline: none;
 }
 
-/* SEARCH FROMS */
+/* SEARCH FORMS */
 .search {
   grid-column: 1 / span 2;
   grid-row-start: 1;
@@ -109,7 +109,7 @@ button:active {
 }
 
 .search h3,
-#searchForm {
+.searchForm {
   display: inline;
 }
 
@@ -117,9 +117,11 @@ button:active {
   padding-right: 20px;
 }
 
+.search-by-type {
+  margin-left: 10%;
+}
 select,
 input.field {
-  width: 50%;
   padding: 8px 10px;
   border: thin solid var(--ltWhite);
   border-radius: 3px;
