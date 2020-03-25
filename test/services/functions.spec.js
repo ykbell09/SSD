@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType } from '../../services/functions.js';
+import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, getSpiritsByDistiller } from '../../services/functions.js';
 import knex from '../../database.js';
 
 describe('member functions', () => {
@@ -86,15 +86,22 @@ describe('member functions', () => {
     });
 });
  
-// WIP
 describe('spirit functions', () => {
     describe('get array of spirits by type', () => {
-        it('gets a type and returns the spirits that match', async () => {
+        it('gets a type and returns an array of spirits', async () => {
 
             const type = 'gin';
             const spiritArray = await getSpiritsByType(type);
-            console.log(spiritArray)
             expect(spiritArray).to.have.lengthOf(3);
+
+        });
+    });
+    describe('get spirits by distiller', () => {
+        it('gets an a distiller id and returns an array of spirts', async () => {
+
+            const distillerId = 1001;
+            const spiritArray = await getSpiritsByDistiller(distillerId);
+            expect(spiritArray).to.have.lengthOf(2);
 
         });
     });
