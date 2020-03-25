@@ -88,24 +88,24 @@
 
         <div class="search item">
             <!-- seach by distiller -->
-            <label for="search-box">
+            <label for="search-select" class="search-label">
                 <h3>search by distiller</h3>
             </label>
-            <form class="searchForm">
-                <select>
-                    <option value="0" selected>please select</option>
+            <form class="searchForm" id="distillerForm">
+                <select id="distillerSelect">
+                    <option value=0 selected>please select</option>
                     <option value="1002">Amass</option>
                     <option value="1003">Golden State Distillery</option>
                     <option value="1001">The Spirit Guild</option>
                 </select>
             </form>
-                        <label for="search-box search-by-type">
+                        <label for="search-select" class="search-label search-type">
                             <h3>search by type</h3>
                         </label>
 
-            <form class="searchForm">
-                <select>
-                    <option value="0" selected>please select</option>
+            <form class="searchForm" id="typeForm">
+                <select id="typeSelect">
+                    <option value=0 selected>please select</option>
                     <option value="gin">gin</option>
                     <option value="vodka">vodka</option>
                 </select>
@@ -113,7 +113,7 @@
         </div>
         <div class="results item article">
             <!-- display results of search -->
-            <h2>check out these great spirits ...</h2>
+            <h3>check out these great spirits:</h3>
             <p class="results-list">
             </p>
         </div>

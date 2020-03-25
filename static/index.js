@@ -1,9 +1,10 @@
-// graphql api to display spirits by distiller using option selected by client
-document.querySelector('#searchSelect').addEventListener('change', () => {
-    // GETS THE DISTILLER ID SELCTED BY CLIENT - selected_id
-    const selected_id = document.querySelector('#searchSelect').selectedOptions[0].value;
+// EVENT LISTENER FOR SEARCH BY DISTILLER SELECT OPTIONS
+document.querySelector('#distillerSelect').addEventListener('change', () => {
 
-    // GRAPH QL QUERY TO GET LIST OF SPIRITS BY DISTILLER USING SELECT MENU
+    // GETS THE DISTILLER ID SELCTED BY CLIENT - selected_id
+    const selected_id = document.querySelector('#distillerSelect').selectedOptions[0].value;
+
+    // QUERY TO GET LIST OF SPIRITS BY DISTILLER 
     const query =
         `query Spirits($distillerId: ID) {
         spiritsByDistiller(distiller_id: $distillerId) {
@@ -15,7 +16,7 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            'Accept': 'application/json'
         },
         body: JSON.stringify({
             query, variables: { distillerId: selected_id }
@@ -23,10 +24,14 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
     })
         .then(response => response.json())
         .then(data => {
+
             // CLEARS LIST FROM ANY PREVIOUS SEARCH
             if (document.querySelector('.resultList') !== null) {
                 document.querySelector('.resultList').remove()
             }
+            
+            // RESETS TYPE FORM IF IT HAS OPTIONS SELECTED
+            document.querySelector('#typeForm').reset();
 
             data = data.data.spiritsByDistiller.map(spirit => `${spirit.spirit_name}`)
 
@@ -44,7 +49,67 @@ document.querySelector('#searchSelect').addEventListener('change', () => {
                 list.appendChild(listItem);
             };
             data.forEach(makeListItems);
+        });
+});
+
+// EVENT LISTENER FOR SEARCH BY TYPE SELECT OPTIONS
+document.querySelector('#typeSelect').addEventListener('change', () => {
+
+    // GETS TYPE SELECTED BY CLIENT
+    const selected_type = document.querySelector('#typeSelect').selectedOptions[0].value;
+
+
+        // QUERY TO GET LIST OF SPIRITS BY TYPE 
+        const query =
+            `query Spirits($spirit_type: String!) {
+            spiritsByType(spirit_type: $spirit_type) {
+                spirit_name
+            }
+    }`;
+
+        fetch('/api/graphql', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                query, variables: { spirit_type: selected_type }
+            })
         })
+            .then(response => response.json())
+            .then(data => {
+
+                // CLEARS LIST FROM ANY PREVIOUS SEARCH
+                if (document.querySelector('.resultList') !== null) {
+                    document.querySelector('.resultList').remove()
+                }
+
+                // RESETS DISTILLER FORM IF IT HAS OPTIONS SELECTED
+                document.querySelector('#distillerForm').reset();
+
+                if (data.data.spiritsByType !== null) {
+
+                    data = data.data.spiritsByType.map(spirit => `${spirit.spirit_name}`);
+
+                    // CREATES AN HTML ELEMENT TO INSERT A LIST & INSERTS QUERY RESULTS AS LIST ITEMS
+                    const resultsP = document.querySelector('.results-list');
+                    const list = document.createElement('ul');
+                    list.className = 'resultList';
+
+                    const makeListItems = (item) => {
+
+                        const listItem = document.createElement('li');
+                        listItem.className = 'listItem';
+                        listItem.innerText = item;
+                        resultsP.appendChild(list);
+                        list.appendChild(listItem);
+                    };
+                    data.forEach(makeListItems);
+
+                }
+            });
+
 });
 
 // SIGN UP BUTTON ADDS MEMBER TO MEMBERS TABLE, LOG IN AND SHOW WELCOME 
