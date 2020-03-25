@@ -40,24 +40,24 @@ app.use('/static', staticRoute);
 const { NODE_ENV } = process.env;
 // COMMENT OUT IF STATEMENT FOR TESTING
 if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
-app.use(function (err, req, res, next) {
-    console.error(err);
-    // then:
-    res.status(500).send({
-        error: 'GENERIC',
-        description: 'Something went wrong. Please try again later.',
-    });
-    // or:
-    // res.send(errPageHTML);
-})
+    app.use(function (err, req, res, next) {
+        console.error(err);
+        // then:
+        res.status(500).send({
+            error: 'GENERIC',
+            description: 'Something went wrong. Please try again later.',
+        });
+        // or:
+        // res.send(errPageHTML);
+    })
 };
 
 // LOCAL PORT 
-const PORT = 8000;
-app.listen(PORT, () =>
-    console.log(`listening on port ${PORT} -- YOU CAN DO THIS!`));
+// const PORT = 8000;
+// app.listen(PORT, () =>
+//     console.log(`listening on port ${PORT} -- YOU CAN DO THIS!`));
 
 // UNCOMMENT FOR DEPLOYMENT
-// app.listen(process.env.PORT, () =>
-//     console.log(`listening on port ${process.env.PORT}`)
-// );
+app.listen(process.env.PORT, () =>
+    console.log(`listening on port ${process.env.PORT}`)
+);
