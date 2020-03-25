@@ -92,8 +92,9 @@ describe('spirit functions', () => {
         it('gets a type and returns the spirits that match', async () => {
 
             const type = 'gin';
-            const typeId = await getSpiritsByType(type);
-            expect(typeId).to.have.lengthOf(3);
+            const spiritArray = await getSpiritsByType(type);
+            console.log(spiritArray)
+            expect(spiritArray).to.have.lengthOf(3);
 
         });
     });
