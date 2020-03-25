@@ -205,7 +205,6 @@ document.querySelector('#logoutForm').addEventListener('submit', (e) => {
 
     // HIDES PROFILE, SHOWS LOGIN AND SIGNUP FORMS
     const forms = document.querySelectorAll('.member');
-    console.log(forms);
     forms.forEach(element => {
         element.className = 'show member item';
     });
@@ -339,7 +338,7 @@ document.querySelector('#updateForm').addEventListener('submit', (e) => {
 });
 
 // CHECKS THE SESSION TO KEEP THE USER SIGNED IN ON REFRESH AND UPDATES UI FOR LOGGED IN MEMBER
-// XX - REFRESH DOES NOT SHOW UPDATED USER NAME IF THEY CHANGE IT WHILE LOGGED IN AND DON'T LOG OUT -- NEED TO DEBUT THIS
+// XX - REFRESH DOES NOT SHOW UPDATED USER NAME IF THEY CHANGE IT WHILE LOGGED IN AND DON'T LOG OUT -- NEED TO UPDATE SESSION
 document.addEventListener('DOMContentLoaded', () => {
 
     const query = `query getLoggedInMember {

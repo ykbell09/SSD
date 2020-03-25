@@ -23,6 +23,8 @@ import { buildSchema } from 'graphql';
  type Query {
      spiritsByDistiller(distiller_id: ID): [Spirit]
      currentMember: Member
+
+     
  }
  input MemberInput {
      email_address: String!
@@ -50,10 +52,12 @@ input UpdateEmailInput {
  type Mutation {
      signUp(member: MemberInput!): Member
      login(member: LoginInput!): Member
-     requestPasswordReset(email_address: String!): SuccessResponse
-     passwordReset(resetInput: PasswordResetInput!): SuccessResponse
      updateUsername(usernameInput: UpdateUsernameInput): Member
      updateEmail(emailInput: UpdateEmailInput): Member
+
+     requestPasswordReset(email_address: String!): SuccessResponse
+     passwordReset(resetInput: PasswordResetInput!): SuccessResponse
+
  }
 
 `);
