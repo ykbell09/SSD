@@ -28,11 +28,12 @@
             <h3>sign in to your account</h3>
             <form id="loginForm">
                 <p>
-                    <label>email <input class="field" id="loginEmail" name="loginEmail"
-                            placeholder="email address" /></label>
+                    <label>email</label>
+                    <input class="field" id="loginEmail" name="loginEmail" placeholder="email address" type="email" autocomplete="email" required autofocus />
                 </p>
                 <p>
-                    <label>password <input class="field" id="password" name="password" placeholder="password" /></label>
+                    <label>password</label>
+                    <input class="field" id="password" name="password" placeholder="password" type="password" required />
                 </p>
                 <input class="submit" type="submit" value="log in" />
             </form>
@@ -43,16 +44,16 @@
             <h3>join the club</h3>
             <form id="addForm">
                 <p>
-                    <label>username <input class="field" id="addUsername" name="addUsername"
-                            placeholder="username" /></label>
+                    <label>username</label>
+                    <input class="field" id="addUsername" name="addUsername" placeholder="username" type="text" required />
                 </p>
                 <p>
-                    <label>email <input class="field" id="addEmail" name="addEmail"
-                            placeholder="email address" /></label>
+                    <label>email</label>
+                    <input class="field" id="addEmail" name="addEmail" placeholder="email address" type="email" required />
                 </p>
                 <p>
-                    <label>password <input class="field" id="addPassword" name="addPassword"
-                            placeholder="password" /></label>
+                    <label>password</label>
+                    <input class="field" id="addPassword" name="addPassword" placeholder="password" type="password" required />
                 </p>
                 <input class="submit" type="submit" value="sign up" />
             </form>
@@ -66,15 +67,15 @@
             <p>your email address: <span id="profileEmail"></span></p>
             <form id="updateForm">
                 <p>
-                    <label>new username <input class="field" id="updateUsername" name="updateUsername"
-                            placeholder="new username" /></label>
+                    <label>new username</label> 
+                    <input class="field" id="updateUsername" name="updateUsername" placeholder="new username" type="text" />
                 </p>
                 <p>
-                    <label>new email <input class="field" id="updateEmail" name="updateEmail"
-                            placeholder="new email address" /></label>
+                    <label>new email</label>
+                    <input class="field" id="updateEmail" name="updateEmail" placeholder="new email address" type="email"/>
                 </p>
                 <!-- <p>
-                    <label>new password <input class="field" id="updatePassword" name="updatePassword" placeholder="new password" /></label>
+                    <label>new password <input class="field" id="updatePassword" name="updatePassword" placeholder="new password" type="password" /></label>
                 </p> -->
                 <input class="submit" type="submit" value="update" />
                 </form>
@@ -83,8 +84,6 @@
                 </form>
             
         </div>
-
-
 
         <div class="search item">
             <!-- seach by distiller -->
