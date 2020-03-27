@@ -81,7 +81,7 @@ export const getSpiritById = async spirit_name => {
         .select('id')
         .where({ spirit_name })
         .returning('id');
-    return spirit;
+    return spirit.id;
 };
 
 // CREATE QUERY -- add a new review

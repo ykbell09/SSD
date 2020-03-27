@@ -102,10 +102,8 @@ button:active {
 .search {
   grid-column: 1 / span 2;
   grid-row-start: 1;
-}
-
-.search {
   text-align: center;
+
 }
 
 .search h3,
@@ -130,11 +128,24 @@ input.field {
   font-family: 'Roboto', sans-serif;
 }
 
+#reviewText {
+  padding: 8px 10px;
+  border: thin solid var(--ltWhite);
+  border-radius: 3px;
+  background-color: var(--white);
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  height: 150px;
+}
+
 .results {
   grid-column: 2 / span 1;
   grid-row: 2 / span 2;
 }
 
+.results-list {
+  min-height: 150px;
+}
 
  /* DOM MANIPULATION HIDE/SHOW */
 

@@ -56,7 +56,7 @@ input UpdateEmailInput {
     email_address: String!
 }
 input CreateReviewInput {
-    spirit_id: ID!
+    spirit_name: String!
     review: String!
 }
  type SuccessResponse { 

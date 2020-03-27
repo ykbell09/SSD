@@ -112,6 +112,53 @@ document.querySelector('#typeSelect').addEventListener('change', () => {
 
 });
 
+// XX LEAVE A REVIEW IF LOGGED IN
+document.querySelector('#reviewForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // GET VALUES OF REVIEW FORM FIELDS 
+    const spiritName = document.querySelector('#reviewSelect').selectedOptions[0].value;
+    const review = document.querySelector('#reviewText').value;
+
+    const mutationQuery = `mutation createReview($spirit_name: String!, $review: String!) {
+        createReview(reviewInput: {
+            spirit_name: $spirit_name,
+            review: $review
+        }) {
+            id
+            review
+        }
+    }`;
+
+    fetch('/api/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            query: mutationQuery, variables: { spirit_name: spiritName, review: review }
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            const reviewId = data.data.createReview.id;
+            alert('Thank you for your review. It\'s review #' + reviewId)
+
+            // CLEARS FORM
+            document.querySelector('#reviewForm').reset();
+
+
+
+        });
+});
+
+
+
+
+
+
 // SIGN UP BUTTON ADDS MEMBER TO MEMBERS TABLE, LOG IN AND SHOW WELCOME 
 document.querySelector('#addForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -136,7 +183,7 @@ document.querySelector('#addForm').addEventListener('submit', (e) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            'Accept': 'application/json'
         },
         body: JSON.stringify({
             query: mutationQuery, variables: { email_address: addEmail, password: addPassword, username: addUsername }
@@ -383,7 +430,6 @@ document.querySelector('#updateForm').addEventListener('submit', (e) => {
 
                 } else {
                     const newEmail = data.data.updateEmail.email_address;
-                    const newUsername = data.data.updateEmail.username;
 
                     // ALERT NEW INFO
                     alert('your email address has been updated to ' + newEmail);
@@ -394,11 +440,8 @@ document.querySelector('#updateForm').addEventListener('submit', (e) => {
                     // CLEARS FORM
                     document.querySelector('#updateForm').reset();
 
-
                  }
-
             });
-
     }
 });
 
