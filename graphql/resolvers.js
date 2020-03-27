@@ -1,4 +1,4 @@
-import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType } from '../services/functions';
+import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, createReviewBySpiritId } from '../services/functions';
 import { compareHash } from '../services/auth';
 // import { sendResetEmail, getPasswordResetKey } from '../services/email';
 
@@ -56,12 +56,14 @@ const resolvers = {
     },
 
     updateEmail: async ({ emailInput: { email_address } }, { session }) => {
-        console.log(session.member.id);
-        const test = await updateEmailAddressById(email_address, session.member.id);
-        console.log(test);
-        return test;
+        const update = await updateEmailAddressById(email_address, session.member.id);
+        return update;
     },
-        
+       
+    createReview: async ({ reviewInput: { spirit_id, review } }, { session }) => {
+        const newReview = await createReviewBySpiritId(spirit_id, review, session.member.id);
+        return newReview;
+    },
     
 }
 

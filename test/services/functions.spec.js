@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, getSpiritsByDistiller, getSpiritById, createReview } from '../../services/functions.js';
+import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, getSpiritsByDistiller, getSpiritById, createReviewBySpiritId } from '../../services/functions.js';
 import knex from '../../database.js';
 
 describe('member functions', () => {
@@ -152,7 +152,7 @@ describe('spirit functions', () => {
             const review = 'this is the most delicious gin ever';
             
             // INSERT REVIEW INTO TABLE
-            const newReview = await createReview(spirit.id, review, member.id);
+            const newReview = await createReviewBySpiritId(spirit.id, review, member.id);
             expect(newReview).to.be.an('object');
 
         });

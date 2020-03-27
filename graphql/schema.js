@@ -24,6 +24,12 @@ import { buildSchema } from 'graphql';
      id: ID! 
      spirit_type: String!
  }
+ type Review {
+     id: ID!
+     spirit_id: Int!
+     review: String!
+     member_id: Int!
+ }
  type Query {
      spiritsByDistiller(distiller_id: ID): [Spirit]
      currentMember: Member
@@ -49,6 +55,10 @@ input UpdateUsernameInput {
 input UpdateEmailInput {
     email_address: String!
 }
+input CreateReviewInput {
+    spirit_id: ID!
+    review: String!
+}
  type SuccessResponse { 
   wasSuccessful: Boolean!
 }
@@ -57,6 +67,7 @@ input UpdateEmailInput {
      login(member: LoginInput!): Member
      updateUsername(usernameInput: UpdateUsernameInput): Member
      updateEmail(emailInput: UpdateEmailInput): Member
+     createReview(reviewInput: CreateReviewInput): Review
 
      requestPasswordReset(email_address: String!): SuccessResponse
      passwordReset(resetInput: PasswordResetInput!): SuccessResponse

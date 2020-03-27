@@ -85,7 +85,7 @@ export const getSpiritById = async spirit_name => {
 };
 
 // CREATE QUERY -- add a new review
-export const createReview = async (spirit_id, review, member_id) => {  
+export const createReviewBySpiritId = async (spirit_id, review, member_id) => {  
     const [newReview] = await knex('reviews')
         .insert({ spirit_id, review, member_id })
         .returning(['id', 'spirit_id', 'review', 'member_id']);
