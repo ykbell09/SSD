@@ -107,3 +107,11 @@ export const createReviewBySpiritId = async (spirit_id, review, member_id) => {
     return newReview;
 };
 
+// READ QUERY -- get reviews
+export const getAllReviews = async () => {
+    const [review] = await knex('reviews')
+        .returning('id', 'spirit_id', 'review', 'member_id');
+    return review;
+};
+
+

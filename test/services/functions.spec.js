@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, getSpiritsByDistiller, getSpiritById, createReviewBySpiritId, getAllDistillers, getDistillerIdByName } from '../../services/functions.js';
+import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, getSpiritsByDistiller, getSpiritById, createReviewBySpiritId, getAllDistillers, getDistillerIdByName, getAllReviews } from '../../services/functions.js';
 import knex from '../../database.js';
 
 describe('member functions', () => {
@@ -107,7 +107,7 @@ describe('member functions', () => {
 describe('spirit functions', () => {
 
     // DELETES CREATED DATA
-    after(async () => {
+    afterEach(async () => {
         await knex('members')
             .where({ username: 'testUsername' })
             .orWhere({ username: 'testNewUsername' })
@@ -137,14 +137,38 @@ describe('spirit functions', () => {
 
             const distillerName = 'Amass';
             const distiller = await getDistillerIdByName(distillerName); 
-            const spiritArray = await getSpiritsByDistiller(distiller.id);
+            const spiritArray = await getSpiritsByDistiller(distiller);
             expect(spiritArray).to.have.lengthOf(2);
+        });
+    });
+
+    describe('getAllReviews', () => {
+        it('returns all reviews', async () => {
+
+            // CREATE A TEST MEMBER -- GET MEMBER ID
+            const testUsername = 'testUsername';
+            const testEmail = 'testEmail';
+            const testPass = 'testPass';
+            const member = await createMember(testEmail, testPass, testUsername);
+
+            // GET SPIRIT ID
+            const spirit_name = 'Grey Whale Gin';
+            const spirit = await getSpiritById(spirit_name);
+
+            // SPIRIT REVIEW
+            const review = 'this is the most delicious gin ever';
+
+            // INSERT REVIEW INTO TABLE
+            await createReviewBySpiritId(spirit, review, member.id);
+
+            // GET REVIEW
+            const reviewList = await getAllReviews();
+            expect(reviewList).to.be.an('object');
 
         });
     });
 
     describe('createReview', () => {
-
         it('takes review input from client and returns a review object', async () => {
 
             // CREATE A TEST MEMBER -- GET MEMBER ID
