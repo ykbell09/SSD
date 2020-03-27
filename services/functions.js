@@ -75,8 +75,20 @@ export const updateEmailAddressById = async (newEmail, id) => {
     return member;
 };
 
+// SELECT QUEREY -- get spirit by id
+export const getSpiritById = async spirit_name => {
+    const [spirit] = await knex('spirits')
+        .select('id')
+        .where({ spirit_name })
+        .returning('id');
+    return spirit;
+};
 
-
-
-
+// CREATE QUERY -- add a new review
+export const createReview = async (spirit_id, review, member_id) => {  
+    const [newReview] = await knex('reviews')
+        .insert({ spirit_id, review, member_id })
+        .returning(['id', 'spirit_id', 'review', 'member_id']);
+    return newReview;
+};
 

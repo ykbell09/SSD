@@ -1,18 +1,28 @@
 import { expect } from 'chai';
-import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, getSpiritsByDistiller } from '../../services/functions.js';
+import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, getSpiritsByDistiller, getSpiritById, createReview } from '../../services/functions.js';
 import knex from '../../database.js';
 
 describe('member functions', () => {
+
+    // DELETES CREATED MEMBER DATA DATA
+    afterEach(async () => {
+        await knex('members')
+            .where({ username: 'testUsername' })
+            .orWhere({ username: 'testNewUsername' })
+            .del();
+    });
+   
+   // CREATE A NEW MEMBER
     describe('createMember', () => {
         it('adds a new member and returns an id', async () => {
 
-            // CREATE A TEST USER
+            // CREATE A TEST MEMBER
             const testUsername = 'testUsername';
             const testEmail = 'testEmail';
             const testPass = 'testPass';
             await createMember(testEmail, testPass, testUsername);
 
-            // RETURN TEST USER ID AND CONFRIM IT IS AN INTEGER / NOT NULL
+            // RETURN TEST MEMBER ID AND CONFRIM IT IS AN INTEGER / NOT NULL
             const getUser = await knex('members')
                 .where({ username: testUsername })
                 .select('id')
@@ -22,7 +32,7 @@ describe('member functions', () => {
         });
 
         // UPDATE MEMBER USERNAME TEST 
-        describe('updateMemberUsername', () => {
+        describe('updateUsernameById', () => {
             it('updates member username and returns a member object', async () => {
 
                 // CREATE A TEST MEMBER TO UPDATE
@@ -87,10 +97,7 @@ describe('member functions', () => {
                 expect(member.email_address).to.equal('testEmail');
 
             });
-        });
-        // DELETES CREATED DATA
-        afterEach(async () => {
-            await knex('members').truncate();
+
         });
 
     });
@@ -98,7 +105,17 @@ describe('member functions', () => {
 });
 
 describe('spirit functions', () => {
-    describe('get array of spirits by spirit type', () => {
+
+    // DELETES CREATED DATA
+    after(async () => {
+        await knex('members')
+            .where({ username: 'testUsername' })
+            .orWhere({ username: 'testNewUsername' })
+            .del();
+        await knex('reviews').truncate();
+    });
+
+    describe('getSpiritsByType', () => {
         it('gets a spirit type and returns an array of spirits', async () => {
 
             const spirit_type = 'gin';
@@ -107,12 +124,36 @@ describe('spirit functions', () => {
 
         });
     });
-    describe('get spirits by distiller', () => {
+    describe('getSpiritsByDistiller', () => {
         it('gets an a distiller id and returns an array of spirts', async () => {
 
             const distillerId = 1001;
             const spiritArray = await getSpiritsByDistiller(distillerId);
             expect(spiritArray).to.have.lengthOf(2);
+
+        });
+    });
+
+    describe('createReview', () => {
+
+        it('takes review input from client and returns a review object', async () => {
+
+            // CREATE A TEST MEMBER -- GET MEMBER ID
+            const testUsername = 'testUsername';
+            const testEmail = 'testEmail';
+            const testPass = 'testPass';
+            const member = await createMember(testEmail, testPass, testUsername);
+
+            // GET SPIRIT ID
+            const spirit_name = 'Grey Whale Gin';
+            const spirit = await getSpiritById(spirit_name);
+            
+            // SPIRIT REVIEW
+            const review = 'this is the most delicious gin ever';
+            
+            // INSERT REVIEW INTO TABLE
+            const newReview = await createReview(spirit.id, review, member.id);
+            expect(newReview).to.be.an('object');
 
         });
     });
