@@ -71,22 +71,25 @@ document.querySelector('#distillerSelect').addEventListener('change', () => {
             // RESETS TYPE FORM IF IT HAS OPTIONS SELECTED
             document.querySelector('#typeForm').reset();
 
-            data = data.data.spiritsByDistiller.map(spirit => `${spirit.spirit_name}`)
+            if (data.data.spiritsByDistiller !== null) {
+                
+                data = data.data.spiritsByDistiller.map(spirit => `${spirit.spirit_name}`)
 
-            // CREATES AN HTML ELEMENT TO INSERT A LIST & INSERTS QUERY RESULTS AS LIST ITEMS
-            const resultsP = document.querySelector('.results-list');
-            const list = document.createElement('ul');
-            list.className = 'resultList';
+                // CREATES AN HTML ELEMENT TO INSERT A LIST & INSERTS QUERY RESULTS AS LIST ITEMS
+                const resultsP = document.querySelector('.results-list');
+                const list = document.createElement('ul');
+                list.className = 'resultList';
 
-            const makeListItems = (item) => {
+                const makeListItems = (item) => {
 
-                const listItem = document.createElement('li');
-                listItem.className = 'listItem';
-                listItem.innerText = item;
-                resultsP.appendChild(list);
-                list.appendChild(listItem);
-            };
-            data.forEach(makeListItems);
+                    const listItem = document.createElement('li');
+                    listItem.className = 'listItem';
+                    listItem.innerText = item;
+                    resultsP.appendChild(list);
+                    list.appendChild(listItem);
+                };
+                data.forEach(makeListItems);
+            }
         });
 });
 
