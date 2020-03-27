@@ -143,12 +143,16 @@ document.querySelector('#reviewForm').addEventListener('submit', (e) => {
         .then(response => response.json())
         .then(data => {
 
-            const reviewId = data.data.createReview.id;
-            alert('Thank you for your review. It\'s review #' + reviewId)
+            if (data.data.createReview === null) {
+                alert('please log in to leave a review');
+            } else {
 
-            // CLEARS FORM
-            document.querySelector('#reviewForm').reset();
+                const reviewId = data.data.createReview.id;
+                alert('Thank you for your review. It\'s review #' + reviewId)
 
+                // CLEARS FORM
+                document.querySelector('#reviewForm').reset();
+            }
 
 
         });
