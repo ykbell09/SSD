@@ -155,7 +155,6 @@ describe('spirit functions', () => {
             // GET SPIRIT ID
             const spirit_name = 'Grey Whale Gin';
             const spirit = await getSpiritById(spirit_name);
-            console.log(spirit);
 
             // SPIRIT REVIEW
             const review = 'this is the most delicious gin ever';

@@ -34,6 +34,7 @@ import { buildSchema } from 'graphql';
      spiritsByDistiller(distiller_id: ID): [Spirit]
      currentMember: Member
      spiritsByType(spirit_type: String!): [Spirit]
+     allDistillers: [Distiller]
  }
  input MemberInput {
      email_address: String!

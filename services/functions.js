@@ -4,7 +4,7 @@ import { hashPass } from './auth';
 // READ QUERY -- get all distillers
 export const getAllDistillers = async () => {
     return await knex('distillers')
-        .returning('id', 'distiller_name');
+        .returning('id', 'distiller_name', 'added_on');
 };
 
 // READ query -- get spirits by distiller
