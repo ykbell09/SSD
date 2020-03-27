@@ -31,7 +31,7 @@ import { buildSchema } from 'graphql';
      member_id: Int!
  }
  type Query {
-     spiritsByDistiller(distiller_id: ID): [Spirit]
+     spiritsByDistiller(distiller_name: String!): [Spirit]
      currentMember: Member
      spiritsByType(spirit_type: String!): [Spirit]
      allDistillers: [Distiller]

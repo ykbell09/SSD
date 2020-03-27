@@ -8,11 +8,20 @@ export const getAllDistillers = async () => {
 };
 
 // READ query -- get spirits by distiller
-export const getSpiritsByDistiller = async selected_id => {
+export const getSpiritsByDistiller = async distiller_id => {
     return await knex('spirits')
         .select('id', 'spirit_name', 'distiller_id')
-        .where({ distiller_id: selected_id })
+        .where({ distiller_id })
         .returning('id', 'spirit_name', 'distiller_id');
+};
+
+// READ QUERY -- get distiller id by name 
+export const getDistillerIdByName = async (distiller_name) => {
+    const [distiller] = await knex('distillers')
+        .select('id', 'distiller_name')
+        .where({ distiller_name })
+        .returning('id', 'distiller_name');
+    return distiller.id;
 };
 
 // READ QUERY -- get spirits by spirit type

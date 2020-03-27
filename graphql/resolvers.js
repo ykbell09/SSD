@@ -1,15 +1,15 @@
-import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, createReviewBySpiritId, getSpiritById, getAllDistillers } from '../services/functions';
+import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, createReviewBySpiritId, getSpiritById, getAllDistillers, getDistillerIdByName } from '../services/functions';
 import { compareHash } from '../services/auth';
 // import { sendResetEmail, getPasswordResetKey } from '../services/email';
 
 const resolvers = {
     allDistillers: async ({}) => {
         const allDistillers = await getAllDistillers();
-        console.log(allDistillers);
         return allDistillers;
     },
 
-    spiritsByDistiller: async ({ distiller_id }) => {
+    spiritsByDistiller: async ({ distiller_name }) => {
+        const distiller_id = await getDistillerIdByName(distiller_name);
         return await getSpiritsByDistiller(distiller_id);   
     },
 

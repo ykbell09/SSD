@@ -1,13 +1,51 @@
+// POPLUATES DISTILLER SELECT ON PAGE LOAD
+document.addEventListener('DOMContentLoaded', () => {
+
+    const query = `query allDistillers {
+        allDistillers {
+        distiller_name
+        id
+        }
+    }`;
+
+    fetch('/api/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ query })
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            // GETS ARRAY OF ALL DISTILLER NAMES FROM DATABASE
+            data = data.data.allDistillers.map(distiller => `${distiller.distiller_name}`);
+
+            // CREATES AN HTML ELEMENT TO INSERT QUERY RESULTS AS SELECT OPTIONS
+            const distillerSelect = document.querySelector('#distillerSelect');
+
+            const makeDistillerSelectOptions = (item) => {
+                const distillerOption = document.createElement('option');
+                distillerOption.value = item;
+                distillerOption.innerText = item;
+                distillerSelect.appendChild(distillerOption);
+            };
+            data.forEach(makeDistillerSelectOptions);
+
+        });
+});
+
 // EVENT LISTENER FOR SEARCH BY DISTILLER SELECT OPTIONS
 document.querySelector('#distillerSelect').addEventListener('change', () => {
 
-    // GETS THE DISTILLER ID SELCTED BY CLIENT - selected_id
-    const selected_id = document.querySelector('#distillerSelect').selectedOptions[0].value;
+    // GETS THE DISTILLER NAME SELCTED BY CLIENT
+    const selectedDistiller = document.querySelector('#distillerSelect').selectedOptions[0].value;
 
-    // QUERY TO GET LIST OF SPIRITS BY DISTILLER 
+    // QUERY TO GET LIST OF SPIRITS BY DISTILLER
     const query =
-        `query Spirits($distillerId: ID) {
-        spiritsByDistiller(distiller_id: $distillerId) {
+        `query Spirits($distiller_name: String!) {
+        spiritsByDistiller(distiller_name: $distiller_name) {
             spirit_name
         }
     }`;
@@ -19,7 +57,7 @@ document.querySelector('#distillerSelect').addEventListener('change', () => {
             'Accept': 'application/json'
         },
         body: JSON.stringify({
-            query, variables: { distillerId: selected_id }
+            query, variables: { distiller_name: selectedDistiller }
         })
     })
         .then(response => response.json())
@@ -29,7 +67,7 @@ document.querySelector('#distillerSelect').addEventListener('change', () => {
             if (document.querySelector('.resultList') !== null) {
                 document.querySelector('.resultList').remove()
             }
-            
+
             // RESETS TYPE FORM IF IT HAS OPTIONS SELECTED
             document.querySelector('#typeForm').reset();
 
@@ -59,63 +97,63 @@ document.querySelector('#typeSelect').addEventListener('change', () => {
     const selected_type = document.querySelector('#typeSelect').selectedOptions[0].value;
 
 
-        // QUERY TO GET LIST OF SPIRITS BY TYPE 
-        const query =
-            `query Spirits($spirit_type: String!) {
+    // QUERY TO GET LIST OF SPIRITS BY TYPE 
+    const query =
+        `query Spirits($spirit_type: String!) {
             spiritsByType(spirit_type: $spirit_type) {
                 spirit_name
             }
     }`;
 
-        fetch('/api/graphql', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                query, variables: { spirit_type: selected_type }
-            })
+    fetch('/api/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            query, variables: { spirit_type: selected_type }
         })
-            .then(response => response.json())
-            .then(data => {
+    })
+        .then(response => response.json())
+        .then(data => {
 
-                // CLEARS LIST FROM ANY PREVIOUS SEARCH
-                if (document.querySelector('.resultList') !== null) {
-                    document.querySelector('.resultList').remove()
-                }
+            // CLEARS LIST FROM ANY PREVIOUS SEARCH
+            if (document.querySelector('.resultList') !== null) {
+                document.querySelector('.resultList').remove()
+            }
 
-                // RESETS DISTILLER FORM IF IT HAS OPTIONS SELECTED
-                document.querySelector('#distillerForm').reset();
+            // RESETS DISTILLER FORM IF IT HAS OPTIONS SELECTED
+            document.querySelector('#distillerForm').reset();
 
-                if (data.data.spiritsByType !== null) {
+            if (data.data.spiritsByType !== null) {
 
-                    data = data.data.spiritsByType.map(spirit => `${spirit.spirit_name}`);
+                data = data.data.spiritsByType.map(spirit => `${spirit.spirit_name}`);
 
-                    // CREATES AN HTML ELEMENT TO INSERT A LIST & INSERTS QUERY RESULTS AS LIST ITEMS
-                    const resultsP = document.querySelector('.results-list');
-                    const list = document.createElement('ul');
-                    list.className = 'resultList';
+                // CREATES AN HTML ELEMENT TO INSERT A LIST & INSERTS QUERY RESULTS AS LIST ITEMS
+                const resultsP = document.querySelector('.results-list');
+                const list = document.createElement('ul');
+                list.className = 'resultList';
 
-                    const makeListItems = (item) => {
+                const makeListItems = (item) => {
 
-                        const listItem = document.createElement('li');
-                        listItem.className = 'listItem';
-                        listItem.innerText = item;
-                        resultsP.appendChild(list);
-                        list.appendChild(listItem);
-                    };
-                    data.forEach(makeListItems);
+                    const listItem = document.createElement('li');
+                    listItem.className = 'listItem';
+                    listItem.innerText = item;
+                    resultsP.appendChild(list);
+                    list.appendChild(listItem);
+                };
+                data.forEach(makeListItems);
 
-                }
-            });
+            }
+        });
 
 });
 
 // XX LEAVE A REVIEW IF LOGGED IN
 document.querySelector('#reviewForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     // GET VALUES OF REVIEW FORM FIELDS 
     const spiritName = document.querySelector('#reviewSelect').selectedOptions[0].value;
     const review = document.querySelector('#reviewText').value;
@@ -338,7 +376,7 @@ document.querySelector('#updateForm').addEventListener('submit', (e) => {
 
 
     // ALERT IF BUTTON PRESSED WITH NO VALUES ENTERED
-    if (updatedUsername == '' && updatedEmail == '' ) {
+    if (updatedUsername == '' && updatedEmail == '') {
         alert('please enter at least one value');
     }
     else {
@@ -410,7 +448,7 @@ document.querySelector('#updateForm').addEventListener('submit', (e) => {
         })
             .then(response => response.json())
             .then(data => {
-                
+
                 if (updatedUsername !== '') {
                     const newUsername = data.data.updateEmail.username;
                     const newEmail = data.data.updateEmail.email_address;
@@ -438,7 +476,7 @@ document.querySelector('#updateForm').addEventListener('submit', (e) => {
                     // CLEARS FORM
                     document.querySelector('#updateForm').reset();
 
-                 }
+                }
             });
     }
 });
