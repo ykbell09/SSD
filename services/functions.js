@@ -1,6 +1,12 @@
 import knex from '../database';
 import { hashPass } from './auth';
 
+// READ QUERY -- get all distillers
+export const getAllDistillers = async () => {
+    return await knex('distillers')
+        .returning('id', 'distiller_name');
+};
+
 // READ query -- get spirits by distiller
 export const getSpiritsByDistiller = async selected_id => {
     return await knex('spirits')

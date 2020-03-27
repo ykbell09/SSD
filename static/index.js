@@ -154,14 +154,8 @@ document.querySelector('#reviewForm').addEventListener('submit', (e) => {
                 document.querySelector('#reviewForm').reset();
             }
 
-
         });
 });
-
-
-
-
-
 
 // SIGN UP BUTTON ADDS MEMBER TO MEMBERS TABLE, LOG IN AND SHOW WELCOME 
 document.querySelector('#addForm').addEventListener('submit', (e) => {

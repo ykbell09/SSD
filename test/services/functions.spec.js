@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, getSpiritsByDistiller, getSpiritById, createReviewBySpiritId } from '../../services/functions.js';
+import { createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, getSpiritsByDistiller, getSpiritById, createReviewBySpiritId, getAllDistillers } from '../../services/functions.js';
 import knex from '../../database.js';
 
 describe('member functions', () => {
@@ -115,6 +115,14 @@ describe('spirit functions', () => {
         await knex('reviews').truncate();
     });
 
+    describe('getAllDistillers', () => {
+        it('gets an array of all distillers', async () => {
+
+            const allDistillers = await getAllDistillers();
+            expect(allDistillers).to.have.lengthOf(3);
+        })
+    })
+
     describe('getSpiritsByType', () => {
         it('gets a spirit type and returns an array of spirits', async () => {
 
@@ -147,12 +155,13 @@ describe('spirit functions', () => {
             // GET SPIRIT ID
             const spirit_name = 'Grey Whale Gin';
             const spirit = await getSpiritById(spirit_name);
-            
+            console.log(spirit);
+
             // SPIRIT REVIEW
             const review = 'this is the most delicious gin ever';
             
             // INSERT REVIEW INTO TABLE
-            const newReview = await createReviewBySpiritId(spirit.id, review, member.id);
+            const newReview = await createReviewBySpiritId(spirit, review, member.id);
             expect(newReview).to.be.an('object');
 
         });
