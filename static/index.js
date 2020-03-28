@@ -72,7 +72,7 @@ document.querySelector('#distillerSelect').addEventListener('change', () => {
             document.querySelector('#typeForm').reset();
 
             if (data.data.spiritsByDistiller !== null) {
-                
+
                 data = data.data.spiritsByDistiller.map(spirit => `${spirit.spirit_name}`)
 
                 // CREATES AN HTML ELEMENT TO INSERT A LIST & INSERTS QUERY RESULTS AS LIST ITEMS
@@ -153,7 +153,7 @@ document.querySelector('#typeSelect').addEventListener('change', () => {
 
 });
 
-// XX LEAVE A REVIEW IF LOGGED IN
+// LEAVE A REVIEW IF LOGGED IN
 document.querySelector('#reviewForm').addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -196,6 +196,52 @@ document.querySelector('#reviewForm').addEventListener('submit', (e) => {
             }
 
         });
+});
+
+// xx DISPLAY ALL REVIEWS
+document.addEventListener('DOMContentLoaded', () => { 
+
+    // GET ALL REVIEWS FROM DB
+    const query = `query Reviews {
+        allReviews {
+            review
+        }
+    }`; 
+
+    fetch('/api/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            query
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            data = data.data.allReviews.map(reviews => `${reviews.review}`);
+
+            if (data !== null) {
+                const reviewList = document.querySelector('.reviews-list');
+                const reviewTitle = document.createElement('h3');
+                reviewTitle.innerText = 'here are some reviews:';
+                reviewList.appendChild(reviewTitle);
+
+                const makeReviewItem = (item) => {
+                    const reviewItem = document.createElement('p');
+                    reviewItem.innerText = item
+                    reviewList.appendChild(reviewItem);
+                };
+                data.forEach(makeReviewItem)
+                console.log(reviewList);
+
+            } 
+
+
+        });
+
 });
 
 // SIGN UP BUTTON ADDS MEMBER TO MEMBERS TABLE, LOG IN AND SHOW WELCOME 

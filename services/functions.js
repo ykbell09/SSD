@@ -107,10 +107,18 @@ export const createReviewBySpiritId = async (spirit_id, review, member_id) => {
     return newReview;
 };
 
-// READ QUERY -- get reviews
+// READ QUERY -- get reviews, returns objects
 export const getAllReviews = async () => {
-    return await knex('reviews')
+    const allReviews = await knex('reviews')
         .returning('id', 'spirit_id', 'review', 'member_id');
+    console.log(allReviews);
+    return allReviews;
 };
 
-
+// export const getAllReviews = async () => {
+//     const [reviews] =  await knex('reviews')
+//         .join('spirits', 'reviews.spirit_id', '=', 'spirits.id')
+//         .select('spirits.spirit_name', 'reviews.review')
+//         .returning('spirits.spirit_name', 'reviews.review')
+//     return reviews;
+// };

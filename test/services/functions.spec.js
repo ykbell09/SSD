@@ -155,16 +155,18 @@ describe('spirit functions', () => {
             const spirit_name = 'Grey Whale Gin';
             const spirit = await getSpiritById(spirit_name);
 
-            // SPIRIT REVIEW
+            // SPIRIT REVIEWs
             const review = 'this is the most delicious gin ever';
+            const review2 = 'I love Grey Whale';
 
             // INSERT REVIEW INTO TABLE
             await createReviewBySpiritId(spirit, review, member.id);
+            await createReviewBySpiritId(spirit, review2, member.id);
 
             // GET REVIEW
             const reviewList = await getAllReviews();
-            expect(reviewList).to.be.an('object');
-
+            // expect(reviewList).to.be.an('object');
+            expect(reviewList).to.be.an('array');
         });
     });
 

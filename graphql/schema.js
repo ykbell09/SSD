@@ -26,7 +26,9 @@ import { buildSchema } from 'graphql';
  }
  type Review {
      id: ID!
+     spirit: [Spirit]
      spirit_id: Int!
+     spirit_name: String!
      review: String!
      member_id: Int!
  }
