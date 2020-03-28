@@ -1,11 +1,10 @@
-import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, createReviewBySpiritId, getSpiritById, getAllDistillers, getDistillerIdByName } from '../services/functions';
+import { getSpiritsByDistiller, getMemberByEmail, createMember, updateUsernameById, updateEmailAddressById, getSpiritsByType, createReviewBySpiritId, getSpiritById, getAllDistillers, getDistillerIdByName, getAllReviews } from '../services/functions';
 import { compareHash } from '../services/auth';
 // import { sendResetEmail, getPasswordResetKey } from '../services/email';
 
 const resolvers = {
-    allDistillers: async ({}) => {
-        const allDistillers = await getAllDistillers();
-        return allDistillers;
+    allDistillers: async () => {
+        return await getAllDistillers();
     },
 
     spiritsByDistiller: async ({ distiller_name }) => {
@@ -33,6 +32,7 @@ const resolvers = {
         session.member = matches ? member : null;
         return session.member;
     },
+
     currentMember: (args, { session }) => session.member,     
 
     // requestPasswordReset: async ({ email_address }) => {
@@ -71,6 +71,10 @@ const resolvers = {
         const newReview = await createReviewBySpiritId(spirit_id, review, session.member.id);
         return newReview;
     },
+
+    allReviews: async () => {
+        return await getAllReviews(); 
+    }
     
 }
 
