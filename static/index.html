@@ -89,6 +89,32 @@
             <form id="logoutForm">
                 <input class="logout" type="submit" value="sign out" />
             </form>
+            <h3>leave a review</h3>
+            <form class="searchForm" id="reviewForm">
+                <p>
+                    <label for="reviewSelect">
+                        choose a spirit
+                    </label></p>
+                <p>
+                    <select id="reviewSelect">
+                        <!-- NEED TO POPULATE THIS BASED ON CLIENT SEARCH -->
+                        <option class="reviewSpirit" value=0 selected>please select</option>
+                        <option class="reviewSpirit" value="Amass Botanic Vodka">Amass Botanic Vodka</option>
+                        <option class="reviewSpirit" value="Amass Dry Gin">Amass Dry Gin</option>
+                        <option class="reviewSpirit" value="Astral Pacific Gin">Astral Pacific Gin</option>
+                        <option class="reviewSpirit" value="Grey Whale Gin">Grey Whale Gin</option>
+                        <option class="reviewSpirit" value="Vapid Vodka">Vapid Vodka</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="reviewText">write your review</label>
+                </p>
+                <p>
+                    <textarea type="text" name="review" id="reviewText" placeholder="This is amazing!" required
+                        maxlength="300"></textarea>
+                </p>
+                <input class="submit" type="submit" value="submit" />
+            </form>
 
         </div>
 
@@ -116,36 +142,10 @@
         </div>
         <div class="results item article">
             <!-- display results of search -->
-            <h3>check out these great spirits:</h3>
+            <h3>check out these great spirits</h3>
             <p class="results-list"></p>
             <p class="reviews-list"></p>
 
-            <h3>leave a review</h3>
-            <form class="searchForm" id="reviewForm">
-                <p>
-                    <label for="reviewSelect">
-                        choose a spirit
-                    </label></p>
-                <p>
-                    <select id="reviewSelect">
-                        <!-- NEED TO POPULATE THIS BASED ON CLIENT SEARCH -->
-                        <option class="reviewSpirit" value=0 selected>please select</option>
-                        <option class="reviewSpirit" value="Amass Botanic Vodka">Amass Botanic Vodka</option>
-                        <option class="reviewSpirit" value="Amass Dry Gin">Amass Dry Gin</option>
-                        <option class="reviewSpirit" value="Astral Pacific Gin">Astral Pacific Gin</option>
-                        <option class="reviewSpirit" value="Grey Whale Gin">Grey Whale Gin</option>
-                        <option class="reviewSpirit" value="Vapid Vodka">Vapid Vodka</option>
-                    </select>
-                </p>
-                <p>
-                    <label for="reviewText">write your review</label>
-                </p>
-                <p>
-                    <textarea type="text" name="review" id="reviewText" placeholder="This is amazing!" required
-                        maxlength="300"></textarea>
-                </p>
-                <input class="submit" type="submit" value="submit" />
-            </form>
 
         </div>
 

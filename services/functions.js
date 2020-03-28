@@ -111,10 +111,10 @@ export const createReviewBySpiritId = async (spirit_id, review, member_id) => {
 export const getAllReviews = async () => {
     const allReviews = await knex('reviews')
         .returning('id', 'spirit_id', 'review', 'member_id');
-    console.log(allReviews);
     return allReviews;
 };
 
+// xx JOIN QUERY ? WIP
 // export const getAllReviews = async () => {
 //     const [reviews] =  await knex('reviews')
 //         .join('spirits', 'reviews.spirit_id', '=', 'spirits.id')

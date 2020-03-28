@@ -73,8 +73,7 @@ const resolvers = {
     },
 
     allReviews: async () => {
-        return await getAllReviews(); 
-       
+        return await getAllReviews();        
     }
     
 }

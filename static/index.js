@@ -160,6 +160,8 @@ document.querySelector('#reviewForm').addEventListener('submit', (e) => {
     // GET VALUES OF REVIEW FORM FIELDS 
     const spiritName = document.querySelector('#reviewSelect').selectedOptions[0].value;
     const review = document.querySelector('#reviewText').value;
+    const reviewText = spiritName + ': ' + review
+    console.log(reviewText);
 
     const mutationQuery = `mutation createReview($spirit_name: String!, $review: String!) {
         createReview(reviewInput: {
@@ -178,7 +180,7 @@ document.querySelector('#reviewForm').addEventListener('submit', (e) => {
             'Accept': 'application/json'
         },
         body: JSON.stringify({
-            query: mutationQuery, variables: { spirit_name: spiritName, review: review }
+            query: mutationQuery, variables: { spirit_name: spiritName, review: reviewText }
         })
     })
         .then(response => response.json())
@@ -198,7 +200,7 @@ document.querySelector('#reviewForm').addEventListener('submit', (e) => {
         });
 });
 
-// xx DISPLAY ALL REVIEWS
+// DISPLAY ALL REVIEWS
 document.addEventListener('DOMContentLoaded', () => { 
 
     // GET ALL REVIEWS FROM DB
@@ -226,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data !== null) {
                 const reviewList = document.querySelector('.reviews-list');
                 const reviewTitle = document.createElement('h3');
-                reviewTitle.innerText = 'here are some reviews:';
+                reviewTitle.innerText = 'here are some reviews';
                 reviewList.appendChild(reviewTitle);
 
                 const makeReviewItem = (item) => {
@@ -235,13 +237,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     reviewList.appendChild(reviewItem);
                 };
                 data.forEach(makeReviewItem)
-                console.log(reviewList);
-
             } 
-
-
         });
-
 });
 
 // SIGN UP BUTTON ADDS MEMBER TO MEMBERS TABLE, LOG IN AND SHOW WELCOME 
