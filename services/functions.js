@@ -122,3 +122,4 @@ export const getAllReviews = async () => {
 //         .returning('spirits.spirit_name', 'reviews.review')
 //     return reviews;
 // };
+

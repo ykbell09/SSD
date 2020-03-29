@@ -161,7 +161,6 @@ document.querySelector('#reviewForm').addEventListener('submit', (e) => {
     const spiritName = document.querySelector('#reviewSelect').selectedOptions[0].value;
     const review = document.querySelector('#reviewText').value;
     const reviewText = spiritName + ': ' + review
-    console.log(reviewText);
 
     const mutationQuery = `mutation createReview($spirit_name: String!, $review: String!) {
         createReview(reviewInput: {

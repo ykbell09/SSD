@@ -36,6 +36,8 @@ const staticRoute = express.static('static');
 app.use('/', staticRoute);
 app.use('/static', staticRoute);
 
+
+
 // GLOBAL ERROR HANDLER
 const { NODE_ENV } = process.env;
 // COMMENT OUT IF STATEMENT FOR TESTING
@@ -53,11 +55,10 @@ if (NODE_ENV !== 'development' && NODE_ENV !== 'test') {
 };
 
 // LOCAL PORT 
-const PORT = 8000;
-app.listen(PORT, () =>
-    console.log(`listening on port ${PORT} -- YOU CAN DO THIS!`));
+// const PORT = 8000;
+// app.listen(PORT, () =>
+//     console.log(`listening on port ${PORT} -- YOU CAN DO THIS!`));
 
-// UNCOMMENT FOR DEPLOYMENT
-// app.listen(process.env.PORT, () =>
-//     console.log(`listening on port ${process.env.PORT}`)
-// );
+app.listen(process.env.PORT, () =>
+    console.log(`listening on port ${process.env.PORT}`)
+);
