@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/ykbell09/SSD#readme",
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "chai": "^4.2.0",
     "connect-session-knex": "^1.6.0",
     "crypto": "^1.0.1",
